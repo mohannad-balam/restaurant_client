@@ -13,7 +13,7 @@ class StartAppPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Restaurant Reservation'),
+        title: const Text('Restaurant Reservation')
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -43,6 +43,7 @@ class StartAppPage extends StatelessWidget {
                 ),
               ],
             ),
+            
           ],
         ),
       ),

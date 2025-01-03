@@ -57,5 +57,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         rethrow;
       }
     });
+
+    on<LogoutEvent>((event, emit) async {
+      BuildContext buildContext = HelpUtils.getContext();
+      try {
+        buildContext.loaderOverlay.show();
+        await Future.delayed(const Duration(seconds: 2));
+        locator<LocalDBService>().remove(LoginResponse.key());
+        buildContext.loaderOverlay.hide();
+        locator<AppRouter>().replaceAll([const StartAppPageRoute()]);
+      } catch (e) {
+        buildContext.loaderOverlay.hide();
+        rethrow;
+      }
+    });
   }
 }

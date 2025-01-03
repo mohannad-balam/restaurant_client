@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
+
+import '../../bloc/auth/auth_bloc.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -13,6 +16,16 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          ElevatedButton(
+                onPressed: () {
+                  BlocProvider.of<AuthBloc>(context).add(
+                    LogoutEvent()
+                  );
+                },
+                child: const Icon(Icons.logout_rounded),
+              ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
