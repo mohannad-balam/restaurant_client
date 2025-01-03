@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:reservation_client/core/services/injectables/locator.dart';
+import 'package:reservation_client/presentation/router/rourter.dart';
+import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 @RoutePage()
 class HomePage extends StatelessWidget {
@@ -25,10 +28,7 @@ class HomePage extends StatelessWidget {
                   icon: Icons.category,
                   label: 'Categories',
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => CategoriesPage()),
-                    // );
+                    locator<AppRouter>().push(const CategoriesPageRoute());
                   },
                 ),
                 // Menus Card
@@ -37,10 +37,7 @@ class HomePage extends StatelessWidget {
                   icon: Icons.menu_book,
                   label: 'Menus',
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(builder: (context) => MenusPage()),
-                    // );
+                    locator<AppRouter>().push(const MenusPageRoute());
                   },
                 ),
               ],
@@ -65,7 +62,7 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildSquareCard(BuildContext context,
-      {required IconData icon, required String label, required VoidCallback onTap}) {
+      {required IconData icon, required String label, required GestureTapCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
