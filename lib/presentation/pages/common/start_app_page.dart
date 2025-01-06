@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
-import 'package:reservation_client/presentation/router/rourter.dart';
+import 'package:reservation_client/core/utils/helpers/helpers.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
+import '../../router/rourter.dart';
 
 @RoutePage()
 class StartAppPage extends StatelessWidget {
@@ -11,39 +12,64 @@ class StartAppPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Restaurant Reservation')
-      ),
+      backgroundColor: theme.colorScheme.secondary,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // App Title
+            Text(
+              'Welcome to Restaurant Reservation',
+              style: theme.textTheme.titleLarge?.copyWith(
+                color: theme.colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
+                fontSize: 40
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 40.0),
+            // Cards Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // Login Card
                 _buildSquareCard(
                   context,
                   icon: Icons.login,
+                  iconColor: theme.colorScheme.secondary,
                   label: 'Login',
+                  textColor: theme.colorScheme.secondary,
+                  color: theme.colorScheme.primary,
                   onTap: () {
                     locator<AppRouter>().push(LoginPageRoute());
                   },
                 ),
-                // Contact Us Card
                 _buildSquareCard(
                   context,
-                  icon: Icons.contact_page,
+                  icon: Icons.call,
+                  iconColor: theme.colorScheme.primary,
                   label: 'Contact Us',
+                  textColor: theme.colorScheme.primary,
+                  color: theme.colorScheme.secondary,
                   onTap: () {
-                    
+                    HelpUtils.tryLaunch(url: "tel:0900000000");
                   },
                 ),
               ],
             ),
-            
+            const SizedBox(height: 20.0),
+            // Footer Text
+            Text(
+              'Making Reservations Easy & Quick!',
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onPrimary.withOpacity(0.8),
+                fontStyle: FontStyle.italic,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
@@ -51,20 +77,25 @@ class StartAppPage extends StatelessWidget {
   }
 
   Widget _buildSquareCard(BuildContext context,
-      {required IconData icon, required String label, required VoidCallback onTap}) {
+      {required IconData icon,
+      required String label,
+      required Color iconColor,
+      required Color textColor,
+      required Color color,
+      required VoidCallback onTap}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.4, // Adjust square size
-        height: MediaQuery.of(context).size.width * 0.4, // Keep it square
+        width: MediaQuery.of(context).size.width * 0.4,
+        height: MediaQuery.of(context).size.width * 0.4,
         decoration: BoxDecoration(
-          color: Colors.blue.shade100,
+          color: color,
           borderRadius: BorderRadius.circular(16.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 5,
+              color: Colors.black.withOpacity(0.2),
+              spreadRadius: 3,
+              blurRadius: 6,
               offset: const Offset(0, 3),
             ),
           ],
@@ -72,11 +103,14 @@ class StartAppPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 48.0, color: Colors.blue),
+            Icon(icon, size: 48.0, color: iconColor,),
             const SizedBox(height: 8.0),
             Text(
               label,
-              style: const TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: textColor,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
           ],
         ),

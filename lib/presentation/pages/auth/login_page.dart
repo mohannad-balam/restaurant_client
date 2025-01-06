@@ -1,13 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/auth/login_request.dart';
-import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
+import '../../../core/common/widgets/custom_text_field.dart';
 import '../../bloc/auth/auth_bloc.dart';
-
+import '../../router/rourter.dart';
 
 @RoutePage()
 class LoginPage extends StatelessWidget {
@@ -19,84 +21,126 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
+      backgroundColor: theme.colorScheme.secondary,
       appBar: AppBar(
         title: const Text('Login'),
+        centerTitle: true,
+        backgroundColor: theme.colorScheme.secondary,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Email Field
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.email),
-                ),
-                keyboardType: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  if (!RegExp(r"^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]+").hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16.0),
-              // Password Field
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.lock),
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16.0),
-              // Login Button
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState?.validate() ?? false) {
-                    BlocProvider.of<AuthBloc>(context).add(
-                      LoginEvent(loginRequest: LoginRequest(
-                        email: _emailController.text,
-                        password: _passwordController.text
-                      ))
-                    );
-                  }
-                },
-                child: const Text('Login'),
-              ),
-              const SizedBox(height: 16.0),
-              // Register Navigation Button
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have an account? "),
-                  TextButton(
-                    onPressed: () {
-                      // Navigate to the register form
-                      locator<AppRouter>().replace(RegisterPageRoute());
-                    },
-                    child: const Text('Register'),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header
+                Text(
+                  'Welcome Back!',
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.primary,
                   ),
-                ],
-              ),
-            ],
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8.0),
+                Text(
+                  'Log in to continue',
+                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 24.0),
+
+                // Email Field
+                CustomTextField(
+                  controller: _emailController,
+                  label: 'Email',
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.email()
+                  ]),
+                  icon: Icons.email,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 16.0),
+
+                // Password Field
+                CustomTextField(
+                  controller: _passwordController,
+                  label: 'Password',
+                  validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                    FormBuilderValidators.email()
+                  ]),
+                  icon: Icons.lock,
+                  keyboardType: TextInputType.emailAddress,
+                ),
+                const SizedBox(height: 24.0),
+
+                // Login Button
+                MainButton(
+                  title: 'Login',
+                  onPressed: () {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      BlocProvider.of<AuthBloc>(context).add(
+                        LoginEvent(
+                          loginRequest: LoginRequest(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                  borderStyle: false,
+                ),
+                const SizedBox(height: 16.0),
+
+                // Forgot Password Button
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      // Navigate to Forgot Password screen (to be implemented)
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.secondary,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24.0),
+
+                // Register Navigation Button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Don't have an account?",
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        locator<AppRouter>().replace(RegisterPageRoute());
+                      },
+                      child: Text(
+                        'Register',
+                        style: theme.textTheme.bodyMedium?.copyWith(
+                          color: theme.colorScheme.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
