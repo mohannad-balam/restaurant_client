@@ -26,4 +26,14 @@ class AuthRepository extends IAuthRepository {
       rethrow;
     }
   }
+  
+  @override
+  Future<User> userInfo() async{
+    try{
+      User user = await locator<IAuthService>().userInfo();
+      return user;
+    }catch(e){
+      rethrow;
+    }
+  }
 }

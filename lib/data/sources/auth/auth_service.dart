@@ -25,4 +25,14 @@ class AuthService extends IAuthService {
         HttpMethods.POST, ApiRoutes.register, registerRequest.toJson());
     return User.fromJson(user);
   }
+  
+  @override
+  Future<User> userInfo() async{
+    try{
+      dynamic user = await locator<HttpService>().request(HttpMethods.GET, ApiRoutes.getUser, {});
+      return User.fromJson(user);
+    }catch(e){
+      rethrow;
+    }
+  }
 }

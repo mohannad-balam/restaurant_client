@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:reservation_client/domain/usecases/auth/get_user_info_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 import '../../../core/services/injectables/locator.dart';
@@ -71,5 +72,22 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         rethrow;
       }
     });
+
+
+    on<GetUserInfoEvent>((event, emit) async {
+      BuildContext buildContext = HelpUtils.getContext();
+      try {
+        emit(AuthLoading());
+        buildContext.loaderOverlay.show();
+        User user = await locator<GetUserInfoUsecase>().call();
+        emit(UserInfoLoaded(user: user));
+        buildContext.loaderOverlay.hide();
+      } catch (e) {
+        buildContext.loaderOverlay.hide();
+        emit(AuthError(message: e.toString()));
+      }
+    });
   }
+
+  
 }

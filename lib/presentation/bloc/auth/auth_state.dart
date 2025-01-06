@@ -24,3 +24,9 @@ class AuthError extends AuthState {
 
   const AuthError({required this.message});
 }
+
+class UserInfoLoaded extends AuthState{
+  final User user;
+
+  const UserInfoLoaded({required this.user});
+}

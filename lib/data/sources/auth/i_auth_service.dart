@@ -5,4 +5,5 @@ import '../../../data/models/response/user.dart';
 abstract class IAuthService {
   Future<LoginResponse> login(LoginRequest loginRequest);
   Future<User> register(RegisterRequest registerRequest);
+  Future<User> userInfo();
 }
