@@ -10,6 +10,7 @@ import 'package:reservation_client/domain/repositories/menus/i_menus_repository.
 import 'package:reservation_client/domain/repositories/menus/menus_repository.dart';
 import 'package:reservation_client/domain/repositories/reservation/i_reservation_repository.dart';
 import 'package:reservation_client/domain/repositories/reservation/reservation_repository.dart';
+import 'package:reservation_client/domain/usecases/auth/get_user_info_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/create_reservation_usecase.dart';
@@ -82,4 +83,6 @@ Future<void> _setupUsecases() async {
   locator.registerSingleton<GetCategoryMenuUsecase>(GetCategoryMenuUsecase());
 
   locator.registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
+
+  locator.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
 }

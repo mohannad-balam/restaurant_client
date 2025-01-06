@@ -9,9 +9,20 @@ import 'package:reservation_client/presentation/router/rourter.gr.dart';
 import '../../bloc/auth/auth_bloc.dart';
 
 @RoutePage()
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  @override
+  void initState() {
+    BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -27,6 +38,13 @@ class HomePage extends StatelessWidget {
             },
             icon: const Icon(Icons.logout_rounded),
             tooltip: 'Logout',
+          ),
+          IconButton(
+            onPressed: () {
+              locator<AppRouter>().push(UserProfilePageRoute());
+            },
+            icon: const Icon(Icons.person),
+            tooltip: 'profile',
           ),
         ],
       ),

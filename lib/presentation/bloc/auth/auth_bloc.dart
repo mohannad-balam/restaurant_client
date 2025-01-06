@@ -64,7 +64,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         buildContext.loaderOverlay.show();
         await Future.delayed(const Duration(seconds: 2));
-        locator<LocalDBService>().remove(LoginResponse.key());
+        await locator<LocalDBService>().remove(LoginResponse.key());
+        await locator<LocalDBService>().remove(User.key());
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().replaceAll([const StartAppPageRoute()]);
       } catch (e) {
@@ -80,6 +81,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoading());
         buildContext.loaderOverlay.show();
         User user = await locator<GetUserInfoUsecase>().call();
+        await locator<LocalDBService>()
+            .saveToDisk(User.key(), user.toJson());
         emit(UserInfoLoaded(user: user));
         buildContext.loaderOverlay.hide();
       } catch (e) {

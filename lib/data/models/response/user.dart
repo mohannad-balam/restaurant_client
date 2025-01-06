@@ -53,4 +53,8 @@ class User {
     data['updated_at'] = this.updatedAt;
     return data;
   }
+
+  static String key(){
+    return 'UserInfo';
+  }
 }

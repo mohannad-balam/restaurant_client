@@ -46,5 +46,10 @@ class AppRouter extends $AppRouter {
             path: '/category-menu-page',
             // guards: [AuthGuard()],
           ),
+        AutoRoute(
+            page: UserProfilePageRoute.page,
+            path: '/user-profile-page',
+            // guards: [AuthGuard()],
+          ),
       ];
 }

@@ -24,6 +24,18 @@ class LocalDBService {
     return null;
   }
 
+  User? getUserInfo() {
+    String? data = _getFromDisk(User.key());
+    if (data != null) {
+      User user = User.fromJson(convert.jsonDecode(data));
+      if (kDebugMode) {
+        print("user name ===> ${user.name}");
+      }
+      return user;
+    }
+    return null;
+  }
+
   Future<void> saveToDisk(String key, dynamic content) async {
     if (content is String) {
       await _preferences.setString(key, content);
@@ -49,8 +61,8 @@ class LocalDBService {
     return value;
   }
 
-  void remove(String key) {
-    _preferences.remove(key);
+  Future<void> remove(String key) async{
+    await _preferences.remove(key);
   }
 
   Future<void> removeEveryThing() async {
