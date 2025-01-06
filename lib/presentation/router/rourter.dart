@@ -51,5 +51,10 @@ class AppRouter extends $AppRouter {
             path: '/user-profile-page',
             // guards: [AuthGuard()],
           ),
+          AutoRoute(
+            page: CreateReservationPageRoute.page,
+            path: '/create-reservation-page',
+            // guards: [AuthGuard()],
+          ),
       ];
 }

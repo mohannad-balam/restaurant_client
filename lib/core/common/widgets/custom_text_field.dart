@@ -10,6 +10,7 @@ class CustomTextField extends StatelessWidget {
   final Color? iconColor;
   final TextInputType? keyboardType;
   final bool isPassword;
+  final bool? enabled;
 
   const CustomTextField({
     super.key,
@@ -20,11 +21,13 @@ class CustomTextField extends StatelessWidget {
     this.iconColor = AppColors.mainColor,
     this.keyboardType,
     this.isPassword = false,
+    this.enabled = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      enabled: enabled,
       obscureText: isPassword,
       keyboardType: keyboardType,
       controller: controller,

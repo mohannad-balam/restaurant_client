@@ -57,6 +57,13 @@ class HelpUtils {
   static String format_Y_M_D(DateTime dateTime) =>
       DateFormat('yyyy-MM-dd').format(dateTime);
 
+  static String format_Y_M_D_containing_hours(DateTime dateTime) {
+    if (kDebugMode) {
+      print(dateTime.toString().split(".")[0]);
+    }
+    return dateTime.toString().split(".")[0];
+  }
+
   static String formatUTCDateTime(DateTime dateTime) {
     String formatted;
     try {
