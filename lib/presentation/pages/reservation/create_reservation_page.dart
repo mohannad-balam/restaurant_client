@@ -1,9 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
+import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
+import 'package:reservation_client/domain/entities/table/table_entity.dart';
+import 'package:reservation_client/presentation/bloc/reservation/reservation_bloc.dart';
+import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 
 import '../../../core/services/injectables/locator.dart';
 import '../../../core/services/localDB/local_db_service.dart';
@@ -27,15 +32,17 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
   final TextEditingController _guestNumberController = TextEditingController();
 
   // Dropdown and DatePicker variables
-  String? _selectedTable;
+  // ignore: unused_field
+  int? _selectedTableId;
   DateTime? _reservationDate;
-
-  final List<String> _tables = ['Table 1', 'Table 2', 'Table 3', 'Table 4'];
 
   @override
   void initState(){
     _nameController.text = locator<LocalDBService>().getUserInfo()?.name ?? '';
     _emailController.text = locator<LocalDBService>().getUserInfo()?.email ?? '';
+    BlocProvider.of<TablesBloc>(context).add(
+      GetAvailableTablesEvent()
+    );
     super.initState();
   }
 
@@ -146,22 +153,26 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                 ),
                 const SizedBox(height: 16),
                 // Table Dropdown
-                DropdownButtonFormField<String>(
+                BlocBuilder<TablesBloc, TablesState>(
+                  builder: (context, state) {
+                    if(state is TablesLoaded){
+                      return DropdownButtonFormField<TableEntity>(
                   style: theme.textTheme.bodyLarge,
                   decoration: const InputDecoration(
                     labelText: 'Select Table',
                     border: OutlineInputBorder(),
                   ),
-                  value: _selectedTable,
-                  items: _tables
+                  value: state.tables.first,
+                  items: state.tables
                       .map((table) => DropdownMenuItem(
                             value: table,
-                            child: Text(table),
+                            child: Text("${table.name.toString()} (${table.guestNumber.toString()} guests) (${table.location.toString()})"),
                           ))
                       .toList(),
                   onChanged: (value) {
                     setState(() {
-                      _selectedTable = value;
+                      print("selected table id => ${value?.id}");
+                      _selectedTableId = value?.id;
                     });
                   },
                   validator: (value) {
@@ -170,12 +181,28 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                     }
                     return null;
                   },
+                );
+                    }
+                    return const SizedBox();
+                  },
                 ),
                 const SizedBox(height: 24),
                 // Submit Button
                 SizedBox(
                   width: double.infinity,
-                  child: MainButton(title: 'Submit Reservation', onPressed: (){}, borderStyle: false)
+                  child: MainButton(title: 'Submit Reservation', onPressed: (){
+                    BlocProvider.of<ReservationBloc>(context).add(
+                      CreateReservationEvent(reservationRequest: ReservationRequest(
+                        firstName: _nameController.text,
+                        lastName: _nameController.text,
+                        email: _emailController.text,
+                        telNumber: _phoneController.text,
+                        guestNumber: int.parse(_guestNumberController.text),
+                        resDate: HelpUtils.format_Y_M_D_containing_hours(_reservationDate!),
+                        tableId: _selectedTableId,
+                      ))
+                    );
+                  }, borderStyle: false)
                 ),
               ],
             ),

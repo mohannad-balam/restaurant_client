@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
+import 'package:reservation_client/presentation/router/rourter.dart';
+import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 import '../../../core/utils/helpers/helpers.dart';
 import '../../../domain/usecases/reservation/create_reservation_usecase.dart';
@@ -18,6 +20,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         buildContext.loaderOverlay.show();
         await locator<CreateReservationUsecase>().call(params: event.reservationRequest);
         buildContext.loaderOverlay.hide();
+        locator<AppRouter>().replace(const ConfirmedPageRoute());
       }catch(e){
         buildContext.loaderOverlay.hide();
         emit(CreateReservationError(message: e.toString()));

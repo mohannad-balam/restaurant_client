@@ -56,5 +56,10 @@ class AppRouter extends $AppRouter {
             path: '/create-reservation-page',
             // guards: [AuthGuard()],
           ),
+          AutoRoute(
+            page: ConfirmedPageRoute.page,
+            path: '/confirmed-page',
+            // guards: [AuthGuard()],
+          ),
       ];
 }

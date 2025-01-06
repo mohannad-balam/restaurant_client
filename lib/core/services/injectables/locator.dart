@@ -4,16 +4,21 @@ import 'package:reservation_client/data/sources/menus/i_menus_service.dart';
 import 'package:reservation_client/data/sources/menus/menus_service.dart';
 import 'package:reservation_client/data/sources/reservation/i_reservation_service.dart';
 import 'package:reservation_client/data/sources/reservation/reservation_service.dart';
+import 'package:reservation_client/data/sources/table/i_table_service.dart';
+import 'package:reservation_client/data/sources/table/table_service.dart';
 import 'package:reservation_client/domain/repositories/categories/categories_repository.dart';
 import 'package:reservation_client/domain/repositories/categories/i_categories_repository.dart';
 import 'package:reservation_client/domain/repositories/menus/i_menus_repository.dart';
 import 'package:reservation_client/domain/repositories/menus/menus_repository.dart';
 import 'package:reservation_client/domain/repositories/reservation/i_reservation_repository.dart';
 import 'package:reservation_client/domain/repositories/reservation/reservation_repository.dart';
+import 'package:reservation_client/domain/repositories/table/i_table_repository.dart';
+import 'package:reservation_client/domain/repositories/table/table_repository.dart';
 import 'package:reservation_client/domain/usecases/auth/get_user_info_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/create_reservation_usecase.dart';
+import 'package:reservation_client/domain/usecases/tables/get_available_tables_usecase.dart';
 
 import '../../../data/sources/auth/auth_service.dart';
 import '../../../data/sources/auth/i_auth_service.dart';
@@ -63,6 +68,7 @@ Future<void> _setupSources() async {
   locator.registerSingleton<ICategoriesService>(CategoriesService());
   locator.registerSingleton<IMenusService>(MenusService());
   locator.registerSingleton<IReservationService>(ReservationService());
+  locator.registerSingleton<ITableService>(TableService());
 }
 
 Future<void> _setupRepositories() async {
@@ -70,6 +76,7 @@ Future<void> _setupRepositories() async {
   locator.registerSingleton<ICategoriesRepository>(CategoriesRepository());
   locator.registerSingleton<IMenusRepository>(MenusRepository());
   locator.registerSingleton<IReservationRepository>(ReservationRepository());
+  locator.registerSingleton<ITableRepository>(TableRepository());
 }
 
 Future<void> _setupUsecases() async {
@@ -85,4 +92,6 @@ Future<void> _setupUsecases() async {
   locator.registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
 
   locator.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
+
+  locator.registerSingleton<GetAvailableTablesUsecase>(GetAvailableTablesUsecase());
 }

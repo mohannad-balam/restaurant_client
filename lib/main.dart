@@ -6,6 +6,8 @@ import 'package:reservation_client/presentation/bloc/auth/auth_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/mutual/category_menu_bloc.dart';
+import 'package:reservation_client/presentation/bloc/reservation/reservation_bloc.dart';
+import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:screentasia/screentasia.dart';
@@ -35,6 +37,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CategoryMenuBloc(),
+        ),
+        BlocProvider(
+          create: (context) => TablesBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ReservationBloc(),
         ),
       ],
       child: ScreentasiaInit(

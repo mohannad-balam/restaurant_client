@@ -11,4 +11,5 @@ class ApiRoutes {
   static String menus = '$baseUrl/menus';
   static String createReservation = '$baseUrl/create-reservation';
   static String getUser = '$baseUrl/user';
+  static String getAvailableTables= '$baseUrl/available-tables';
 }
