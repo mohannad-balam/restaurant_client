@@ -31,8 +31,4 @@ static const Color darkBackroundBottomNavigationBarColor =
 static const Color darktitleColor = Color.fromARGB(208, 255, 255, 255);
 static const Color darkMainTextColor = Color(0x99FFFFFF);
 static const Color darksecondeyTextColor = Color(0x4DFFFFFF);
-
-//===============additional colors================//
-static Color? wabsColor = Colors.green[700];
-static Color? loadingColor = Colors.green[700];
 }
