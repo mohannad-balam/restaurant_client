@@ -74,10 +74,11 @@ class LoginPage extends StatelessWidget {
                   label: 'Password',
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(),
-                    FormBuilderValidators.email()
+                    // FormBuilderValidators.password()
                   ]),
                   icon: Icons.lock,
-                  keyboardType: TextInputType.emailAddress,
+                  isPassword: true,
+                  keyboardType: TextInputType.text,
                 ),
                 const SizedBox(height: 24.0),
 
