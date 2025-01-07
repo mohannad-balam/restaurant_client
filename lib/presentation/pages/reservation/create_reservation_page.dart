@@ -2,8 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:lottie/lottie.dart';
 import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/asset_files.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
 import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
 import 'package:reservation_client/domain/entities/table/table_entity.dart';
@@ -92,6 +94,12 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Lottie.asset(
+                  AssetLotties.reservations,
+                  repeat: true,
+                  animate: true,
+                ),
+                const SizedBox(height: 16),
                 // First Name
                 CustomTextField(
                   enabled: false,
