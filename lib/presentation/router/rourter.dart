@@ -6,7 +6,7 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-            initial: true,
+            // initial: true,
             page: InitPageRoute.page,
             path: '/init-page',
             // guards: [AuthGuard()],
@@ -57,6 +57,7 @@ class AppRouter extends $AppRouter {
             // guards: [AuthGuard()],
           ),
           AutoRoute(
+            initial: true,
             page: ConfirmedPageRoute.page,
             path: '/confirmed-page',
             // guards: [AuthGuard()],

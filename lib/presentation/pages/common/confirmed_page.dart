@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/asset_files.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
-import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
@@ -22,19 +23,21 @@ class ConfirmedPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Lottie animation for the green checkmark
-              // Lottie.asset(
-              //   'assets/green_check.json', // Path to your Lottie JSON file
-              //   width: 150,
-              //   height: 150,
-              //   repeat: false, // Animation plays once
-              // ),
-              const Icon(Icons.check, size: 30, color: AppColors.successColor,),
+              Lottie.asset(
+                animate: true,
+                AssetLotties.checkSign, // Path to your Lottie JSON file
+                width: 150,
+                height: 150,
+                repeat: true, // Animation plays once
+              ),
+              // const Icon(Icons.check, size: 30, color: AppColors.successColor,),
               const SizedBox(height: 24),
               // ConfirmedPage message
                Text(
                 'Reservation Confirmed!',
                 style: theme.textTheme.titleLarge?.copyWith(
-                  color: theme.colorScheme.primary
+                  color: theme.colorScheme.primary,
+                  fontSize: 30
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -49,24 +52,9 @@ class ConfirmedPage extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               // Back to Home button
-              ElevatedButton(
-                onPressed: () {
+              MainButton(title: 'Back To Home', onPressed: () {
                   locator<AppRouter>().replaceAll([const HomePageRoute()]);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  child: Text(
-                    'Back to Home',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ),
-              ),
+                }, borderStyle: true)
             ],
           ),
         ),
