@@ -39,7 +39,7 @@ dependencies:
   equatable: 
   get_it: 
   form_builder_validators:
-  flutter_advanced_drawer: 
+  flutter_advanced_drawer: ^1.3.7 
   screentasia:
   google_fonts: 
   # shared_preferences: 
