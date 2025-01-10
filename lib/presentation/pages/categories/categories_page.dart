@@ -36,12 +36,18 @@ class _CategoriesPageState extends State<CategoriesPage> {
               child: CircularProgressIndicator(),
             );
           }else if(state is CategoriesLoaded){
-            return ListView.builder(
-              itemCount: state.categories.length,
-              itemBuilder: (BuildContext context, int index) {
-                return CategoryItem(categoryEntity: state.categories[index]);
-              },
-            );
+            return GridView.builder(
+          itemCount: state.categories.length,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // Two items per row
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            childAspectRatio: 3 / 4, // Adjust for the desired card height
+          ),
+          itemBuilder: (context, index) {
+            return CategoryItem(categoryEntity: state.categories[index]);
+          },
+        );
           }else if(state is CategoriesError){
             return Center(
               child: Text(state.message),

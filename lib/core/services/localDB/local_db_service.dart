@@ -24,7 +24,7 @@ class LocalDBService {
     return null;
   }
 
-  User? getUserInfo() {
+  User? getUserInfo(){
     String? data = _getFromDisk(User.key());
     if (data != null) {
       User user = User.fromJson(convert.jsonDecode(data));

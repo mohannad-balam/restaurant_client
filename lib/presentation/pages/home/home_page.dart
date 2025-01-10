@@ -4,9 +4,12 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/core/common/widgets/square_card.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
+import 'package:reservation_client/data/models/response/user.dart';
+import 'package:reservation_client/presentation/pages/common/my_drawer.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
+import '../../../core/services/localDB/local_db_service.dart';
 import '../../bloc/auth/auth_bloc.dart';
 
 @RoutePage()
@@ -18,10 +21,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  late User? user;
   @override
   void initState() {
-    BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
+    user = locator<LocalDBService>().getUserInfo();
+    if(user == null){
+      BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
+      user = locator<LocalDBService>().getUserInfo();
+    }
+    
     super.initState();
   }
 
@@ -30,75 +38,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return AdvancedDrawer(
       backdropColor: Theme.of(context).primaryColor,
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
-      drawer: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Welcome Message and Username
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundColor: Theme.of(context).primaryColorLight,
-                    child: Icon(
-                      Icons.person,
-                      color: Theme.of(context).primaryColorDark,
-                    ),
-                  ),
-                  const SizedBox(width: 16.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Welcome',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                      ),
-                      Text(
-                        'Username',
-                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColorLight,
-                            ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32.0),
-              // Logout Button
-              ElevatedButton(
-                onPressed: () {
-                  // Add your logout logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Logged out')),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Theme.of(context).colorScheme.secondary,
-                ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.logout),
-                    SizedBox(width: 8.0),
-                    Text('Logout'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      drawer: MyDrawer(user: user,),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -107,20 +52,6 @@ class _HomePageState extends State<HomePage> {
             IconButton(onPressed: (){
               _advancedDrawerController.showDrawer();
             }, icon: const Icon(Icons.menu))
-            // IconButton(
-            //   onPressed: () {
-            //     BlocProvider.of<AuthBloc>(context).add(LogoutEvent());
-            //   },
-            //   icon: const Icon(Icons.logout_rounded),
-            //   tooltip: 'Logout',
-            // ),
-            // IconButton(
-            //   onPressed: () {
-            //     locator<AppRouter>().push(UserProfilePageRoute());
-            //   },
-            //   icon: const Icon(Icons.person),
-            //   tooltip: 'profile',
-            // ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -203,14 +134,5 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
-  }
-}
-
-class MyDrawer extends StatelessWidget {
-  const MyDrawer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
