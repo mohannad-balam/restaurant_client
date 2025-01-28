@@ -85,10 +85,10 @@ class _HomePageState extends State<HomePage> {
                     // Categories Card
                     SquareCard(
                       icon: Icons.category,
-                      iconColor: theme.colorScheme.secondary,
+                      iconColor: theme.colorScheme.primary,
                       label: 'Categories',
-                      textColor: theme.colorScheme.secondary,
-                      color: theme.colorScheme.primary,
+                      textColor: theme.colorScheme.primary,
+                      color: theme.colorScheme.secondary,
                       onTap: () {
                         locator<AppRouter>().push(const CategoriesPageRoute());
                       },
@@ -96,10 +96,10 @@ class _HomePageState extends State<HomePage> {
                     // Menus Card
                     SquareCard(
                       icon: Icons.menu_book,
-                      iconColor: theme.colorScheme.secondary,
+                      iconColor: theme.colorScheme.primary,
                       label: 'Menu',
-                      textColor: theme.colorScheme.secondary,
-                      color: theme.colorScheme.primary,
+                      textColor: theme.colorScheme.primary,
+                      color: theme.colorScheme.secondary,
                       onTap: () {
                         locator<AppRouter>().push(const MenusPageRoute());
                       },
@@ -107,10 +107,10 @@ class _HomePageState extends State<HomePage> {
                     // Reservation Card
                     SquareCard(
                       icon: Icons.event_seat,
-                      iconColor: theme.colorScheme.secondary,
+                      iconColor: theme.colorScheme.primary,
                       label: 'Reservation',
-                      textColor: theme.colorScheme.secondary,
-                      color: theme.colorScheme.primary,
+                      textColor: theme.colorScheme.primary,
+                      color: theme.colorScheme.secondary,
                       onTap: () {
                         locator<AppRouter>().push(const CreateReservationPageRoute());
                       },
@@ -118,10 +118,10 @@ class _HomePageState extends State<HomePage> {
                     // Example Future Feature Card
                     SquareCard(
                       icon: Icons.settings,
-                      iconColor: theme.colorScheme.primary,
+                      iconColor: theme.colorScheme.secondary,
                       label: 'Settings',
-                      textColor: theme.colorScheme.primary,
-                      color: theme.colorScheme.secondary.withOpacity(0.8),
+                      textColor: theme.colorScheme.secondary,
+                      color: theme.colorScheme.primary,
                       onTap: () {
                         // Navigate to Settings
                       },

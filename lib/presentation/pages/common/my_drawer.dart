@@ -26,10 +26,10 @@ class MyDrawer extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 24,
-                      backgroundColor: Theme.of(context).primaryColorLight,
+                      backgroundColor: Theme.of(context).colorScheme.secondary,
                       child: Icon(
                         Icons.person,
-                        color: Theme.of(context).primaryColorDark,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     const SizedBox(width: 16.0),

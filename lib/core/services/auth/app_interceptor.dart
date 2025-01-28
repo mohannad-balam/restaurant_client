@@ -9,6 +9,7 @@ class AppInterceptor extends Interceptor {
   List<Function> failedQueue = [];
 
   AppInterceptor({required this.dio});
+  
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
