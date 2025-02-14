@@ -25,7 +25,6 @@ import '../../../data/sources/auth/i_auth_service.dart';
 import '../../../domain/repositories/auth/auth_repository.dart';
 import '../../../domain/repositories/auth/i_auth_repository.dart';
 import '../../../domain/usecases/auth/login_usecase.dart';
-import '../../../domain/usecases/auth/register_usecase.dart';
 
 import '../../../domain/usecases/categories/get_category_menu_usecase.dart';
 import '../../../presentation/router/rourter.dart';
@@ -81,7 +80,6 @@ Future<void> _setupRepositories() async {
 
 Future<void> _setupUsecases() async {
   locator.registerSingleton<LoginUsecase>(LoginUsecase());
-  locator.registerSingleton<RegisterUsecase>(RegisterUsecase());
 
   locator.registerSingleton<GetCategoriesUsecase>(GetCategoriesUsecase());
 
@@ -89,9 +87,11 @@ Future<void> _setupUsecases() async {
 
   locator.registerSingleton<GetCategoryMenuUsecase>(GetCategoryMenuUsecase());
 
-  locator.registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
+  locator
+      .registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
 
   locator.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
 
-  locator.registerSingleton<GetAvailableTablesUsecase>(GetAvailableTablesUsecase());
+  locator.registerSingleton<GetAvailableTablesUsecase>(
+      GetAvailableTablesUsecase());
 }

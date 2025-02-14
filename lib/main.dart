@@ -14,7 +14,7 @@ import 'package:screentasia/screentasia.dart';
 
 import 'core/theme/app_themes.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator();
   runApp(const MyApp());
@@ -47,9 +47,9 @@ class MyApp extends StatelessWidget {
       ],
       child: ScreentasiaInit(
         useInheritedMediaQuery: true,
-        builder:(context, child) => GlobalLoaderOverlay(
+        builder: (context, child) => GlobalLoaderOverlay(
           child: MaterialApp.router(
-            title: 'Reservation Client',
+            title: 'Admin Reservation Client',
             debugShowCheckedModeBanner: false,
             theme: AppThemes.themes[ThemeEnum.light],
             themeMode: ThemeMode.light,

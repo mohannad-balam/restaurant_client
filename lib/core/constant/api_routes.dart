@@ -5,11 +5,16 @@ class ApiRoutes {
   static String categoryUrl = SpecificConstants.categoryUrl;
   static String menuUrl = SpecificConstants.menuUrl;
   static String login = '$baseUrl/user-login';
-  static String register = '$baseUrl/user-register';
-  static String categories = '$baseUrl/categories';
-  static String menusCategory(String id) => '$baseUrl/categories/$id';
-  static String menus = '$baseUrl/menus';
-  static String createReservation = '$baseUrl/create-reservation';
+
+  /// categories
+  static String categories = '$baseUrl/admin-categories';
+  static String updateCategory(String id) => '$baseUrl/admin-categories/$id';
+  static String deleteCategory(String id) => '$baseUrl/admin-categories/$id';
+
+  /// end categories
+  static String menusCategory(String id) => '$baseUrl/admin-categories/$id';
+  static String menus = '$baseUrl/admin-menus';
+  static String createReservation = '$baseUrl/admin-reservations';
   static String getUser = '$baseUrl/user';
-  static String getAvailableTables= '$baseUrl/available-tables';
+  static String getAvailableTables = '$baseUrl/admin-tables';
 }

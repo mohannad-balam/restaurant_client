@@ -13,7 +13,6 @@ import '../../../data/models/request/auth/login_request.dart';
 import '../../../data/models/request/auth/register_request.dart';
 import '../../../data/models/response/user.dart';
 import '../../../domain/usecases/auth/login_usecase.dart';
-import '../../../domain/usecases/auth/register_usecase.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../core/services/localDB/local_db_service.dart';
@@ -23,22 +22,6 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
-    on<RegisterEvent>((event, emit) async {
-      BuildContext buildContext = HelpUtils.getContext();
-      try {
-        buildContext.loaderOverlay.show();
-        emit(AuthLoading());
-        await locator<RegisterUsecase>()
-            .call(params: event.registerRequest);
-        emit(AuthLoggedIn());
-        buildContext.loaderOverlay.hide();
-        locator<AppRouter>().replace(const HomePageRoute());
-      } catch (e) {
-        buildContext.loaderOverlay.hide();
-        rethrow;
-      }
-    });
-
     on<LoginEvent>((event, emit) async {
       BuildContext buildContext = HelpUtils.getContext();
       try {
@@ -74,15 +57,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
 
-
     on<GetUserInfoEvent>((event, emit) async {
       BuildContext buildContext = HelpUtils.getContext();
       try {
         emit(AuthLoading());
         buildContext.loaderOverlay.show();
         User user = await locator<GetUserInfoUsecase>().call();
-        await locator<LocalDBService>()
-            .saveToDisk(User.key(), user.toJson());
+        await locator<LocalDBService>().saveToDisk(User.key(), user.toJson());
         emit(UserInfoLoaded(user: user));
         buildContext.loaderOverlay.hide();
       } catch (e) {
@@ -91,6 +72,4 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
     });
   }
-
-  
 }
