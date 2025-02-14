@@ -7,7 +7,8 @@ class ApiRoutes {
   static String login = '$baseUrl/user-login';
 
   /// categories
-  static String categories = '$baseUrl/admin-categories';
+  static String categories = '$baseUrl/categories';
+  static String createCategory = '$baseUrl/create-category';
   static String updateCategory(String id) => '$baseUrl/admin-categories/$id';
   static String deleteCategory(String id) => '$baseUrl/admin-categories/$id';
 

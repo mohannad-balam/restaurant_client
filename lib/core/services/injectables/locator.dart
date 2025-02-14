@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:reservation_client/data/sources/categories/categories_service.dart';
 import 'package:reservation_client/data/sources/categories/i_categories_service.dart';
 import 'package:reservation_client/data/sources/menus/i_menus_service.dart';
@@ -15,6 +16,7 @@ import 'package:reservation_client/domain/repositories/reservation/reservation_r
 import 'package:reservation_client/domain/repositories/table/i_table_repository.dart';
 import 'package:reservation_client/domain/repositories/table/table_repository.dart';
 import 'package:reservation_client/domain/usecases/auth/get_user_info_usecase.dart';
+import 'package:reservation_client/domain/usecases/categories/add_category_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/create_reservation_usecase.dart';
@@ -28,6 +30,7 @@ import '../../../domain/usecases/auth/login_usecase.dart';
 
 import '../../../domain/usecases/categories/get_category_menu_usecase.dart';
 import '../../../presentation/router/rourter.dart';
+import '../app_logger.dart';
 import '../http/http_service.dart';
 import '../localDB/local_db_service.dart';
 import 'package:get_it/get_it.dart';
@@ -48,6 +51,7 @@ Future<void> setupLocator() async {
 Future<void> _setupServives() async {
   locator.registerSingleton(AppRouter());
   locator.registerSingleton(EncryptionHelper());
+  locator.registerSingleton(Logger(printer: CustomPrinter()));
 }
 
 Future<void> _setupHttpService() async {
@@ -94,4 +98,6 @@ Future<void> _setupUsecases() async {
 
   locator.registerSingleton<GetAvailableTablesUsecase>(
       GetAvailableTablesUsecase());
+
+  locator.registerSingleton<CreateCategoryUsecase>(CreateCategoryUsecase());
 }

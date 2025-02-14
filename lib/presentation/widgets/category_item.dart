@@ -11,12 +11,16 @@ class CategoryItem extends StatelessWidget {
 
   const CategoryItem({super.key, required this.categoryEntity});
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        locator<AppRouter>().push(CategoryMenusPageRoute(id: categoryEntity.id.toString(), categoryName: categoryEntity.name.toString()));
+      onTap: () {
+        locator<AppRouter>().push(
+          CategoryMenusPageRoute(
+            id: categoryEntity.id.toString(),
+            categoryName: categoryEntity.name.toString(),
+          ),
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -39,6 +43,33 @@ class CategoryItem extends StatelessWidget {
                     colors: [Colors.black.withOpacity(0.6), Colors.transparent],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 10,
+                right: 10,
+                child: PopupMenuButton<String>(
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      // locator<AppRouter>().push(
+                      //   // EditCategoryPageRoute(id: categoryEntity.id.toString()),
+                      // );
+                    } else if (value == 'delete') {}
+                  },
+                  itemBuilder: (context) => [
+                    const PopupMenuItem(
+                      value: 'edit',
+                      child: Text('Edit'),
+                    ),
+                    const PopupMenuItem(
+                      value: 'delete',
+                      child: Text('Delete'),
+                    ),
+                  ],
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
                   ),
                 ),
               ),

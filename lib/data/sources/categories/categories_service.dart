@@ -34,8 +34,8 @@ class CategoriesService extends ICategoriesService {
   @override
   Future<void> create(CreateCategoryRequest request) async {
     try {
-      await locator<HttpService>()
-          .request(HttpMethods.POST, ApiRoutes.categories, request.toJson());
+      await locator<HttpService>().request(
+          HttpMethods.POST, ApiRoutes.createCategory, request.toJson());
     } catch (e) {
       rethrow;
     }

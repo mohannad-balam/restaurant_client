@@ -10,6 +10,8 @@ import 'package:reservation_client/domain/usecases/categories/add_category_useca
 import 'package:reservation_client/domain/usecases/categories/delete_category_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/update_category_usecase.dart';
+import 'package:reservation_client/presentation/router/rourter.dart';
+import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';
@@ -33,7 +35,8 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         buildContext.loaderOverlay.show();
         await locator<CreateCategoryUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
-        add(const GetCategoriesEvent());
+        locator<AppRouter>().replace(const CategoriesPageRoute());
+        // add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
         emit(CategoriesError(message: e.toString()));

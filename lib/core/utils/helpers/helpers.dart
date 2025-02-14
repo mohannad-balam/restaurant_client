@@ -177,4 +177,9 @@ class HelpUtils {
       }
     }
   }
+
+  static String urlLastSegment(String url) {
+    final uri = Uri.parse(url);
+    return uri.pathSegments.last;
+  }
 }
