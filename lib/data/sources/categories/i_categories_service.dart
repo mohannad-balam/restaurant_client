@@ -7,6 +7,6 @@ abstract class ICategoriesService {
   Future<List<CategoryModel>> getAll();
   Future<List<MenuModel>> getCategoryMenu(String id);
   Future<void> create(CreateCategoryRequest request);
-  Future<void> update(String id);
+  Future<void> update(CreateCategoryRequest request);
   Future<void> delete(String id);
 }

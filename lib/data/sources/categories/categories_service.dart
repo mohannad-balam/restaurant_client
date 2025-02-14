@@ -52,10 +52,10 @@ class CategoriesService extends ICategoriesService {
   }
 
   @override
-  Future<void> update(String id) async {
+  Future<void> update(CreateCategoryRequest request) async {
     try {
-      await locator<HttpService>()
-          .request(HttpMethods.PUT, ApiRoutes.updateCategory(id), {});
+      await locator<HttpService>().request(HttpMethods.PUT,
+          ApiRoutes.updateCategory(request.id.toString()), request.toJson());
     } catch (e) {
       rethrow;
     }

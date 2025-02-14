@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
+import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 
 import '../../core/constant/api_routes.dart';
 import '../../core/services/injectables/locator.dart';
@@ -52,10 +54,14 @@ class CategoryItem extends StatelessWidget {
                 child: PopupMenuButton<String>(
                   onSelected: (value) {
                     if (value == 'edit') {
-                      // locator<AppRouter>().push(
-                      //   // EditCategoryPageRoute(id: categoryEntity.id.toString()),
-                      // );
-                    } else if (value == 'delete') {}
+                      locator<AppRouter>().push(
+                        EditCategoryPageRoute(categoryEntity: categoryEntity),
+                      );
+                    } else if (value == 'delete') {
+                      BlocProvider.of<CategoriesBloc>(context).add(
+                          DeleteCategoryEvent(
+                              id: categoryEntity.id.toString()));
+                    }
                   },
                   itemBuilder: (context) => [
                     const PopupMenuItem(

@@ -1,9 +1,10 @@
 class CreateCategoryRequest {
+  String? id;
   String? name;
   String? description;
   String? image;
 
-  CreateCategoryRequest({this.name, this.description, this.image});
+  CreateCategoryRequest({this.name, this.description, this.image, this.id});
 
   CreateCategoryRequest.fromJson(Map<String, dynamic> json) {
     name = json['name'];

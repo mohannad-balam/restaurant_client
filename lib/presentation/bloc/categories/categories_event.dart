@@ -17,8 +17,8 @@ class CreateCategoryEvent extends CategoriesEvent {
 }
 
 class UpdateCategoryEvent extends CategoriesEvent {
-  final String id;
-  const UpdateCategoryEvent({required this.id});
+  final CreateCategoryRequest request;
+  const UpdateCategoryEvent({required this.request});
 }
 
 class DeleteCategoryEvent extends CategoriesEvent {

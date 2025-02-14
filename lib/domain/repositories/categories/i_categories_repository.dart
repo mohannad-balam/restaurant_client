@@ -7,6 +7,6 @@ abstract class ICategoriesRepository {
   Future<List<CategoryEntity>> getAll();
   Future<List<MenuEntity>> getCategoryMenu(String id);
   Future<void> create(CreateCategoryRequest request);
-  Future<void> update(String id);
+  Future<void> update(CreateCategoryRequest request);
   Future<void> delete(String id);
 }

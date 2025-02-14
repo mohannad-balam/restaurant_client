@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/data/models/request/category/create_category_request.dart';
+import 'package:reservation_client/domain/entities/category/category_entity.dart';
 import 'dart:io';
 
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 
 @RoutePage()
-class AddCategoryPage extends StatefulWidget {
-  const AddCategoryPage({super.key});
+class EditCategoryPage extends StatefulWidget {
+  final CategoryEntity categoryEntity;
+  const EditCategoryPage({super.key, required this.categoryEntity});
 
   @override
-  _AddCategoryPageState createState() => _AddCategoryPageState();
+  _EditCategoryPageState createState() => _EditCategoryPageState();
 }
 
-class _AddCategoryPageState extends State<AddCategoryPage> {
+class _EditCategoryPageState extends State<EditCategoryPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -38,13 +40,20 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Category added successfully')),
       );
-      BlocProvider.of<CategoriesBloc>(context).add(CreateCategoryEvent(
+      BlocProvider.of<CategoriesBloc>(context).add(UpdateCategoryEvent(
           request: CreateCategoryRequest(
-        name: _nameController.text,
-        description: _descriptionController.text,
-        image: _image?.path ?? '',
-      )));
+              id: widget.categoryEntity.id.toString(),
+              name: _nameController.text,
+              description: _descriptionController.text,
+              image: 'dscfvR')));
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = widget.categoryEntity.name ?? '';
+    _descriptionController.text = widget.categoryEntity.description ?? '';
   }
 
   @override
@@ -92,7 +101,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               Center(
                 child: ElevatedButton(
                   onPressed: _submitForm,
-                  child: const Text('Add Category'),
+                  child: const Text('Update Category'),
                 ),
               ),
             ],

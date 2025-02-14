@@ -53,9 +53,9 @@ class CategoriesRepository extends ICategoriesRepository {
   }
 
   @override
-  Future<void> update(String id) async {
+  Future<void> update(CreateCategoryRequest request) async {
     try {
-      await locator<ICategoriesService>().update(id);
+      await locator<ICategoriesService>().update(request);
     } catch (e) {
       rethrow;
     }

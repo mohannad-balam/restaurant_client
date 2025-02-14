@@ -64,5 +64,10 @@ class AppRouter extends $AppRouter {
           path: '/add-category-page',
           guards: [AuthGuard()],
         ),
+        AutoRoute(
+          page: EditCategoryPageRoute.page,
+          path: '/edit-category-page',
+          guards: [AuthGuard()],
+        ),
       ];
 }

@@ -28,7 +28,9 @@ import '../../../domain/repositories/auth/auth_repository.dart';
 import '../../../domain/repositories/auth/i_auth_repository.dart';
 import '../../../domain/usecases/auth/login_usecase.dart';
 
+import '../../../domain/usecases/categories/delete_category_usecase.dart';
 import '../../../domain/usecases/categories/get_category_menu_usecase.dart';
+import '../../../domain/usecases/categories/update_category_usecase.dart';
 import '../../../presentation/router/rourter.dart';
 import '../app_logger.dart';
 import '../http/http_service.dart';
@@ -100,4 +102,6 @@ Future<void> _setupUsecases() async {
       GetAvailableTablesUsecase());
 
   locator.registerSingleton<CreateCategoryUsecase>(CreateCategoryUsecase());
+  locator.registerSingleton<DeleteCategoryUsecase>(DeleteCategoryUsecase());
+  locator.registerSingleton<UpdateCategoryUsecase>(UpdateCategoryUsecase());
 }
