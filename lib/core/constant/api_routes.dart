@@ -20,7 +20,7 @@ class ApiRoutes {
   static String deleteMenu(String id) => '$baseUrl/delete-menu/$id';
 
   /// tables
-  static String tables = '$baseUrl/tables';
+  static String tables = '$baseUrl/get-tables';
   static String createTable = '$baseUrl/create-table';
   static String updateTable(String id) => '$baseUrl/update-table/$id';
   static String deleteTable(String id) => '$baseUrl/delete-table/$id';

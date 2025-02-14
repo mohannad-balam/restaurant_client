@@ -20,7 +20,10 @@ import 'package:reservation_client/domain/usecases/categories/add_category_useca
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/create_reservation_usecase.dart';
+import 'package:reservation_client/domain/usecases/tables/add_table_usecase.dart';
+import 'package:reservation_client/domain/usecases/tables/delete_table_usecase.dart';
 import 'package:reservation_client/domain/usecases/tables/get_available_tables_usecase.dart';
+import 'package:reservation_client/domain/usecases/tables/update_table_usecase.dart';
 
 import '../../../data/sources/auth/auth_service.dart';
 import '../../../data/sources/auth/i_auth_service.dart';
@@ -101,7 +104,13 @@ Future<void> _setupUsecases() async {
   locator.registerSingleton<GetAvailableTablesUsecase>(
       GetAvailableTablesUsecase());
 
+  ///categories
   locator.registerSingleton<CreateCategoryUsecase>(CreateCategoryUsecase());
   locator.registerSingleton<DeleteCategoryUsecase>(DeleteCategoryUsecase());
   locator.registerSingleton<UpdateCategoryUsecase>(UpdateCategoryUsecase());
+
+  ///tables
+  locator.registerSingleton<AddTableUsecase>(AddTableUsecase());
+  locator.registerSingleton<DeleteTableUsecase>(DeleteTableUsecase());
+  locator.registerSingleton<UpdateTableUsecase>(UpdateTableUsecase());
 }
