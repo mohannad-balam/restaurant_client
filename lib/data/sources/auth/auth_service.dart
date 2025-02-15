@@ -10,8 +10,8 @@ class AuthService extends IAuthService {
   @override
   Future<LoginResponse> login(LoginRequest loginRequest) async {
     try {
-      dynamic loginResponse = await locator<HttpService>()
-          .request(HttpMethods.POST, ApiRoutes.login, loginRequest.toJson());
+      dynamic loginResponse = await locator<HttpService>().request(
+          HttpMethods.POST, ApiRoutes.login, loginRequest.toJson(), null);
       return LoginResponse.fromJson(loginResponse);
     } catch (e) {
       rethrow;
@@ -22,7 +22,7 @@ class AuthService extends IAuthService {
   Future<User> userInfo() async {
     try {
       dynamic user = await locator<HttpService>()
-          .request(HttpMethods.GET, ApiRoutes.getUser, {});
+          .request(HttpMethods.GET, ApiRoutes.getUser, {}, null);
       return User.fromJson(user);
     } catch (e) {
       rethrow;

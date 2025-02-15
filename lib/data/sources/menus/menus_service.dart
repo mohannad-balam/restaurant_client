@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:reservation_client/core/constant/api_routes.dart';
 import 'package:reservation_client/core/enums/http_methods.dart';
 import 'package:reservation_client/core/services/http/http_service.dart';
@@ -11,7 +12,7 @@ class MenusService extends IMenusService {
   Future<List<MenuModel>> getAll() async {
     try {
       List<dynamic> menus = await locator<HttpService>()
-          .request(HttpMethods.GET, ApiRoutes.menus, {});
+          .request(HttpMethods.GET, ApiRoutes.menus, {}, null);
       return menus.map((e) => MenuModel.fromJson(e)).toList();
     } catch (e) {
       rethrow;
@@ -19,10 +20,10 @@ class MenusService extends IMenusService {
   }
 
   @override
-  Future<void> createMenu(CreateMenuRequest request) async {
+  Future<void> createMenu(FormData request) async {
     try {
       await locator<HttpService>()
-          .request(HttpMethods.POST, ApiRoutes.createMenu, request.toJson());
+          .request(HttpMethods.POST, ApiRoutes.createMenu, {}, request);
     } catch (e) {
       rethrow;
     }
@@ -32,7 +33,7 @@ class MenusService extends IMenusService {
   Future<void> deleteMenu(String id) async {
     try {
       await locator<HttpService>()
-          .request(HttpMethods.DELETE, ApiRoutes.deleteMenu(id), {});
+          .request(HttpMethods.DELETE, ApiRoutes.deleteMenu(id), {}, null);
     } catch (e) {
       rethrow;
     }
@@ -42,7 +43,7 @@ class MenusService extends IMenusService {
   Future<void> updateMenu(CreateMenuRequest request) async {
     try {
       await locator<HttpService>().request(HttpMethods.PUT,
-          ApiRoutes.updateMenu(request.id.toString()), request.toJson());
+          ApiRoutes.updateMenu(request.id.toString()), request.toJson(), null);
     } catch (e) {
       rethrow;
     }

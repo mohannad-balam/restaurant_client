@@ -9,10 +9,21 @@ import '../../core/services/injectables/locator.dart';
 import '../router/rourter.dart';
 import '../router/rourter.gr.dart';
 
-class CategoryItem extends StatelessWidget {
+class CategoryItem extends StatefulWidget {
   final CategoryEntity categoryEntity;
 
   const CategoryItem({super.key, required this.categoryEntity});
+
+  @override
+  State<CategoryItem> createState() => _CategoryItemState();
+}
+
+class _CategoryItemState extends State<CategoryItem> {
+  @override
+  void initState() {
+    super.initState();
+    print("image => ${widget.categoryEntity.image}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +31,8 @@ class CategoryItem extends StatelessWidget {
       onTap: () {
         locator<AppRouter>().push(
           CategoryMenusPageRoute(
-            id: categoryEntity.id.toString(),
-            categoryName: categoryEntity.name.toString(),
+            id: widget.categoryEntity.id.toString(),
+            categoryName: widget.categoryEntity.name.toString(),
           ),
         );
       },
@@ -35,7 +46,8 @@ class CategoryItem extends StatelessWidget {
           child: Stack(
             children: [
               CachedNetworkImage(
-                imageUrl: "${ApiRoutes.categoryUrl}/${categoryEntity.image}",
+                imageUrl:
+                    "${ApiRoutes.categoryUrl}/${widget.categoryEntity.image}",
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
@@ -56,12 +68,13 @@ class CategoryItem extends StatelessWidget {
                   onSelected: (value) {
                     if (value == 'edit') {
                       locator<AppRouter>().push(
-                        EditCategoryPageRoute(categoryEntity: categoryEntity),
+                        EditCategoryPageRoute(
+                            categoryEntity: widget.categoryEntity),
                       );
                     } else if (value == 'delete') {
                       BlocProvider.of<CategoriesBloc>(context).add(
                           DeleteCategoryEvent(
-                              id: categoryEntity.id.toString()));
+                              id: widget.categoryEntity.id.toString()));
                     }
                   },
                   itemBuilder: (context) => [
@@ -88,7 +101,7 @@ class CategoryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      categoryEntity.name!,
+                      widget.categoryEntity.name!,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -97,7 +110,7 @@ class CategoryItem extends StatelessWidget {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      categoryEntity.description!,
+                      widget.categoryEntity.description!,
                       style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white70,

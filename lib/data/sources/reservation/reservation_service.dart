@@ -15,6 +15,7 @@ class ReservationService extends IReservationService {
         HttpMethods.POST,
         ApiRoutes.createReservation,
         reservationRequest.toJson(),
+        null,
       );
     } catch (e) {
       rethrow;
@@ -28,6 +29,7 @@ class ReservationService extends IReservationService {
         HttpMethods.DELETE,
         ApiRoutes.deleteReservation(id),
         {},
+        null,
       );
     } catch (e) {
       rethrow;
@@ -37,8 +39,12 @@ class ReservationService extends IReservationService {
   @override
   Future<List<ReservationModel>> getAllReservations() async {
     try {
-      List<dynamic> reservations = await locator<HttpService>()
-          .request(HttpMethods.GET, ApiRoutes.reservations, {});
+      List<dynamic> reservations = await locator<HttpService>().request(
+        HttpMethods.GET,
+        ApiRoutes.reservations,
+        {},
+        null,
+      );
       return reservations.map((e) => ReservationModel.fromJson(e)).toList();
     } catch (e) {
       rethrow;
@@ -52,6 +58,7 @@ class ReservationService extends IReservationService {
         HttpMethods.PUT,
         ApiRoutes.updateReservation(reservationRequest.id.toString()),
         reservationRequest.toJson(),
+        null,
       );
     } catch (e) {
       rethrow;

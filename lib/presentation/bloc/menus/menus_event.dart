@@ -10,7 +10,7 @@ sealed class MenusEvent extends Equatable {
 class GetMenusEvent extends MenusEvent {}
 
 class CreateMenuEvent extends MenusEvent {
-  final CreateMenuRequest request;
+  final FormData request;
 
   const CreateMenuEvent({required this.request});
 }

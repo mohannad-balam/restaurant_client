@@ -27,13 +27,17 @@ class HttpService {
     );
   }
 
-  Future<dynamic> request(
-      HttpMethods httpMethod, String route, Map<String, dynamic>? parameters,
+  Future<dynamic> request(HttpMethods httpMethod, String route,
+      Map<String, dynamic>? parameters, FormData? formData,
       [Map<String, dynamic> headers = const {}]) async {
     late Response response;
-
+    if (formData != null) {
+      _dio.options.headers['content-Type'] = 'multipart/form-data';
+    } else {
+      _dio.options.headers['content-Type'] = 'application/json';
+    }
     headers.forEach((key, value) => _dio.options.headers[key] = value);
-    _dio.options.headers['content-Type'] = 'application/json';
+    // _dio.options.headers['content-Type'] = 'application/json';
 
     try {
       if (httpMethod == HttpMethods.GET) {
@@ -45,7 +49,7 @@ class HttpService {
       } else if (httpMethod == HttpMethods.POST) {
         response = await _dio.post(
           route,
-          data: parameters,
+          data: formData ?? parameters,
           // queryParameters: parameters,
         );
       } else if (httpMethod == HttpMethods.PUT) {

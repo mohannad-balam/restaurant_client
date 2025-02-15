@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 
@@ -38,7 +37,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
     }
   }
 
-  void _submitMenu() {
+  void _submitMenu() async {
     if (_nameController.text.isEmpty ||
         _descriptionController.text.isEmpty ||
         _priceController.text.isEmpty ||
@@ -51,15 +50,19 @@ class _AddMenuPageState extends State<AddMenuPage> {
       return;
     }
 
+    FormData formData = FormData.fromMap({
+      "name": _nameController.text,
+      "description": _descriptionController.text,
+      'price': double.parse(_priceController.text),
+      "image": _selectedImage != null
+          ? await MultipartFile.fromFile(_selectedImage!.path,
+              filename: _selectedImage?.path.split('/').last)
+          : null,
+    });
+
     BlocProvider.of<MenusBloc>(context).add(
       CreateMenuEvent(
-        request: CreateMenuRequest(
-          name: _nameController.text,
-          description: _descriptionController.text,
-          price: double.parse(_priceController.text),
-          image: _selectedImage?.path.toString() ?? '',
-          categories: _selectedCategoryIds, // Pass selected category IDs
-        ),
+        request: formData,
       ),
     );
   }

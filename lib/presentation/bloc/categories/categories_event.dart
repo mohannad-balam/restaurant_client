@@ -12,7 +12,7 @@ class GetCategoriesEvent extends CategoriesEvent {
 }
 
 class CreateCategoryEvent extends CategoriesEvent {
-  final CreateCategoryRequest request;
+  final FormData request;
   const CreateCategoryEvent({required this.request});
 }
 

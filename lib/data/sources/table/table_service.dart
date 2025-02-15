@@ -11,7 +11,7 @@ class TableService extends ITableService {
   Future<List<TableModel>> getAvailableTables() async {
     try {
       List<dynamic> tables = await locator<HttpService>()
-          .request(HttpMethods.GET, ApiRoutes.tables, {});
+          .request(HttpMethods.GET, ApiRoutes.tables, {}, null);
       return tables.map((e) => TableModel.fromJson(e)).toList();
     } catch (e) {
       rethrow;
@@ -21,8 +21,8 @@ class TableService extends ITableService {
   @override
   Future<void> createTable(CreateTableRequest request) async {
     try {
-      await locator<HttpService>()
-          .request(HttpMethods.POST, ApiRoutes.createTable, request.toJson());
+      await locator<HttpService>().request(
+          HttpMethods.POST, ApiRoutes.createTable, request.toJson(), null);
     } catch (e) {
       rethrow;
     }
@@ -32,7 +32,7 @@ class TableService extends ITableService {
   Future<void> deleteTable(String id) async {
     try {
       await locator<HttpService>()
-          .request(HttpMethods.DELETE, ApiRoutes.deleteTable(id), {});
+          .request(HttpMethods.DELETE, ApiRoutes.deleteTable(id), {}, null);
     } catch (e) {
       rethrow;
     }
@@ -42,7 +42,7 @@ class TableService extends ITableService {
   Future<void> updateTable(CreateTableRequest request) async {
     try {
       await locator<HttpService>().request(HttpMethods.PUT,
-          ApiRoutes.updateTable(request.id.toString()), request.toJson());
+          ApiRoutes.updateTable(request.id.toString()), request.toJson(), null);
     } catch (e) {
       rethrow;
     }

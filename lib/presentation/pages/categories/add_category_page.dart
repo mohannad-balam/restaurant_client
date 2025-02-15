@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,18 +33,23 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     }
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
-      // Handle form submission (e.g., send data to API)
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Category added successfully')),
-      );
-      BlocProvider.of<CategoriesBloc>(context).add(CreateCategoryEvent(
-          request: CreateCategoryRequest(
-        name: _nameController.text,
-        description: _descriptionController.text,
-        image: _image?.path ?? '',
-      )));
+      try {
+        FormData formData = FormData.fromMap({
+          "name": _nameController.text,
+          "description": _descriptionController.text,
+          "image": _image != null
+              ? await MultipartFile.fromFile(_image!.path,
+                  filename: _image?.path.split('/').last)
+              : null,
+        });
+
+        BlocProvider.of<CategoriesBloc>(context)
+            .add(CreateCategoryEvent(request: formData));
+      } catch (e) {
+        print("Error uploading: $e");
+      }
     }
   }
 

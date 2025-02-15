@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/utils/helpers/mappers/menu_mapper.dart';
 import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
@@ -14,7 +15,7 @@ class MenusRepository extends IMenusRepository {
   }
 
   @override
-  Future<void> createMenu(CreateMenuRequest request) async {
+  Future<void> createMenu(FormData request) async {
     try {
       await locator<IMenusService>().createMenu(request);
     } catch (e) {

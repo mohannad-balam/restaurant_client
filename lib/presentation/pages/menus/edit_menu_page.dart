@@ -80,7 +80,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Menu")),
+      appBar: AppBar(title: const Text("Edit Menu")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
