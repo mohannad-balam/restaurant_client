@@ -45,7 +45,6 @@ import '../app_logger.dart';
 import '../http/http_service.dart';
 import '../localDB/local_db_service.dart';
 import 'package:get_it/get_it.dart';
-import '../../utils/helpers/encrypt_helper.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -61,7 +60,6 @@ Future<void> setupLocator() async {
 
 Future<void> _setupServives() async {
   locator.registerSingleton(AppRouter());
-  locator.registerSingleton(EncryptionHelper());
   locator.registerSingleton(Logger(printer: CustomPrinter()));
 }
 

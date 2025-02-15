@@ -9,6 +9,8 @@ import 'package:reservation_client/presentation/bloc/categories/categories_bloc.
 
 @RoutePage()
 class AddMenuPage extends StatefulWidget {
+  const AddMenuPage({super.key});
+
   @override
   _AddMenuPageState createState() => _AddMenuPageState();
 }
@@ -20,7 +22,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
   File? _selectedImage;
   final ImagePicker _picker = ImagePicker();
 
-  List<int> _selectedCategoryIds = [];
+  final List<int> _selectedCategoryIds = [];
 
   @override
   void initState() {

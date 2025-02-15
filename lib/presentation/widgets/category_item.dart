@@ -22,7 +22,7 @@ class _CategoryItemState extends State<CategoryItem> {
   @override
   void initState() {
     super.initState();
-    print("image => ${widget.categoryEntity.image}");
+    debugPrint("image => ${widget.categoryEntity.image}");
   }
 
   @override

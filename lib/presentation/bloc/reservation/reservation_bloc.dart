@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -9,8 +9,6 @@ import 'package:reservation_client/domain/usecases/reservation/delete_reservatio
 import 'package:reservation_client/domain/usecases/reservation/get_reservations_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/update_reservation_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
-import 'package:reservation_client/presentation/router/rourter.gr.dart';
-
 import '../../../core/utils/helpers/helpers.dart';
 import '../../../domain/usecases/reservation/create_reservation_usecase.dart';
 part 'reservation_event.dart';

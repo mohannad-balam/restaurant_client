@@ -3,7 +3,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reservation_client/data/models/request/category/create_category_request.dart';
 import 'dart:io';
 
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
@@ -28,7 +27,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
-        print("image => ${_image?.path}");
+        debugPrint("image => ${_image?.path}");
       });
     }
   }
@@ -48,7 +47,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
         BlocProvider.of<CategoriesBloc>(context)
             .add(CreateCategoryEvent(request: formData));
       } catch (e) {
-        print("Error uploading: $e");
+        debugPrint("Error uploading: $e");
       }
     }
   }

@@ -73,13 +73,13 @@ abstract class $AppRouter extends _i21.RootStackRouter {
     AddMenuPageRoute.name: (routeData) {
       return _i21.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.AddMenuPage(),
+        child: const _i2.AddMenuPage(),
       );
     },
     AddTablePageRoute.name: (routeData) {
       return _i21.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i3.AddTablePage(),
+        child: const _i3.AddTablePage(),
       );
     },
     CategoriesPageRoute.name: (routeData) {

@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 
@@ -11,11 +11,12 @@ part 'category_menu_state.dart';
 class CategoryMenuBloc extends Bloc<CategoryMenuEvent, CategoryMenuState> {
   CategoryMenuBloc() : super(CategoryMenuInitial()) {
     on<GetCategoryMenu>((event, emit) async {
-      try{
+      try {
         emit(CategoryMenuLoading());
-        List<MenuEntity> categoryMenu = await locator<GetCategoryMenuUsecase>().call(params: event.id);
+        List<MenuEntity> categoryMenu =
+            await locator<GetCategoryMenuUsecase>().call(params: event.id);
         emit(CategoryMenuLoaded(categoryMenu: categoryMenu));
-      }catch(e){
+      } catch (e) {
         emit(CategoryMenuError(message: e.toString()));
       }
     });

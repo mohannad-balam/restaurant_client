@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,6 @@ import 'package:reservation_client/domain/usecases/categories/delete_category_us
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/update_category_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
-import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 part 'categories_event.dart';
 part 'categories_state.dart';

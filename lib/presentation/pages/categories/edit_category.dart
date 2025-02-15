@@ -29,7 +29,7 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
     if (pickedFile != null) {
       setState(() {
         _image = File(pickedFile.path);
-        print("image => ${_image?.path}");
+        debugPrint("image => ${_image?.path}");
       });
     }
   }

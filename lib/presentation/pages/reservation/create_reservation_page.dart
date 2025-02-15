@@ -179,7 +179,7 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            print("selected table id => ${value?.id}");
+                            debugPrint("selected table id => ${value?.id}");
                             _selectedTableId = value?.id;
                           });
                         },

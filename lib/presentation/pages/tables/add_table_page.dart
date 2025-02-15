@@ -6,6 +6,8 @@ import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 
 @RoutePage()
 class AddTablePage extends StatefulWidget {
+  const AddTablePage({super.key});
+
   @override
   _AddTablePageState createState() => _AddTablePageState();
 }
@@ -75,7 +77,7 @@ class _AddTablePageState extends State<AddTablePage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    print('add table');
+                    debugPrint('add table');
                     BlocProvider.of<TablesBloc>(context).add(CreateTableEvent(
                         request: CreateTableRequest(
                       name: _nameController.text,

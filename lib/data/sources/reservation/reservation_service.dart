@@ -5,7 +5,6 @@ import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
 import 'package:reservation_client/data/models/response/reservation/reservation.dart';
 import 'package:reservation_client/data/sources/reservation/i_reservation_service.dart';
-import 'package:reservation_client/domain/entities/reservation/reservation_entity.dart';
 
 class ReservationService extends IReservationService {
   @override
