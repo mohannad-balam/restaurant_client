@@ -5,16 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
+import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 
 @RoutePage()
-class AddMenuPage extends StatefulWidget {
+class EditMenuPage extends StatefulWidget {
+  final MenuEntity menuEntity;
+
+  const EditMenuPage({super.key, required this.menuEntity});
   @override
-  _AddMenuPageState createState() => _AddMenuPageState();
+  _EditMenuPageState createState() => _EditMenuPageState();
 }
 
-class _AddMenuPageState extends State<AddMenuPage> {
+class _EditMenuPageState extends State<EditMenuPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
@@ -27,6 +31,14 @@ class _AddMenuPageState extends State<AddMenuPage> {
   void initState() {
     super.initState();
     BlocProvider.of<CategoriesBloc>(context).add(const GetCategoriesEvent());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _nameController.text = widget.menuEntity.name.toString();
+    _descriptionController.text = widget.menuEntity.description.toString();
+    _priceController.text = widget.menuEntity.price.toString();
   }
 
   Future<void> _pickImage() async {
@@ -52,8 +64,9 @@ class _AddMenuPageState extends State<AddMenuPage> {
     }
 
     BlocProvider.of<MenusBloc>(context).add(
-      CreateMenuEvent(
+      UpdateMenuEvent(
         request: CreateMenuRequest(
+          id: widget.menuEntity.id.toString(),
           name: _nameController.text,
           description: _descriptionController.text,
           price: double.parse(_priceController.text),

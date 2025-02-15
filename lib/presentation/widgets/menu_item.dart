@@ -1,6 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
+import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
+import 'package:reservation_client/presentation/router/rourter.dart';
+import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 import '../../core/constant/api_routes.dart';
 
@@ -56,7 +61,15 @@ class MenuItem extends StatelessWidget {
                       PopupMenuButton<String>(
                         onSelected: (value) {
                           if (value == 'edit') {
-                          } else if (value == 'delete') {}
+                            locator<AppRouter>().push(
+                                EditMenuPageRoute(menuEntity: menuEntity));
+                          } else if (value == 'delete') {
+                            BlocProvider.of<MenusBloc>(context).add(
+                              DeleteMenuEvent(
+                                id: menuEntity.id.toString(),
+                              ),
+                            );
+                          }
                         },
                         itemBuilder: (context) => [
                           const PopupMenuItem(

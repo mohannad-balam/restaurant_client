@@ -4,6 +4,7 @@ class CreateMenuRequest {
   String? description;
   double? price;
   String? image;
+  List<int>? categories;
 
   CreateMenuRequest({
     this.name,
@@ -11,6 +12,7 @@ class CreateMenuRequest {
     this.price,
     this.image,
     this.id,
+    this.categories,
   });
 
   CreateMenuRequest.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class CreateMenuRequest {
     data['description'] = this.description;
     data['price'] = this.price;
     data['image'] = this.image;
+    data['categories'] = this.categories;
     return data;
   }
 }

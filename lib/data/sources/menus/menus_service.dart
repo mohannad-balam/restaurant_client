@@ -42,7 +42,7 @@ class MenusService extends IMenusService {
   Future<void> updateMenu(CreateMenuRequest request) async {
     try {
       await locator<HttpService>().request(HttpMethods.PUT,
-          ApiRoutes.updateCategory(request.id.toString()), request.toJson());
+          ApiRoutes.updateMenu(request.id.toString()), request.toJson());
     } catch (e) {
       rethrow;
     }
