@@ -34,7 +34,7 @@ class TablesBloc extends Bloc<TablesEvent, TablesState> {
         buildContext.loaderOverlay.show();
         await locator<AddTableUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().push(const TablesPageRoute());
+        locator<AppRouter>().maybePop();
       } catch (e) {
         buildContext.loaderOverlay.hide();
         emit(TablesError(message: e.toString()));
@@ -58,7 +58,7 @@ class TablesBloc extends Bloc<TablesEvent, TablesState> {
         buildContext.loaderOverlay.show();
         await locator<UpdateTableUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().push(const TablesPageRoute());
+        locator<AppRouter>().maybePop();
       } catch (e) {
         buildContext.loaderOverlay.hide();
         emit(TablesError(message: e.toString()));

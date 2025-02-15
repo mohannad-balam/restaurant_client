@@ -36,7 +36,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         buildContext.loaderOverlay.show();
         await locator<CreateCategoryUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().replace(const CategoriesPageRoute());
+        locator<AppRouter>().maybePop();
         // add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
@@ -50,7 +50,7 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         buildContext.loaderOverlay.show();
         await locator<UpdateCategoryUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().replace(const CategoriesPageRoute());
+        locator<AppRouter>().maybePop();
         // add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
@@ -64,7 +64,6 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         buildContext.loaderOverlay.show();
         await locator<DeleteCategoryUsecase>().call(params: event.id);
         buildContext.loaderOverlay.hide();
-        // locator<AppRouter>().replace(const CategoriesPageRoute());
         add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();

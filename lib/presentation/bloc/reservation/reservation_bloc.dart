@@ -25,7 +25,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         await locator<CreateReservationUsecase>()
             .call(params: event.reservationRequest);
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().replace(const ConfirmedPageRoute());
+        locator<AppRouter>().maybePop();
       } catch (e) {
         buildContext.loaderOverlay.hide();
         emit(CreateReservationError(message: e.toString()));
@@ -60,7 +60,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         await locator<UpdateReservationUsecase>()
             .call(params: event.reservationRequest);
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().push(const ReservationsPageRoute());
+        locator<AppRouter>().maybePop();
       } catch (e) {
         buildContext.loaderOverlay.hide();
         emit(CreateReservationError(message: e.toString()));

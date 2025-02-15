@@ -35,7 +35,7 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
           params: event.request,
         );
         context.loaderOverlay.hide();
-        locator<AppRouter>().push(const MenusPageRoute());
+        locator<AppRouter>().maybePop();
       } catch (e) {
         context.loaderOverlay.hide();
         emit(MenusError(message: e.toString()));
@@ -63,7 +63,7 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
           params: event.request,
         );
         context.loaderOverlay.hide();
-        locator<AppRouter>().push(const MenusPageRoute());
+        locator<AppRouter>().maybePop();
       } catch (e) {
         context.loaderOverlay.hide();
         emit(MenusError(message: e.toString()));
