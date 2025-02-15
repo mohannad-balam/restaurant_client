@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
@@ -33,8 +34,8 @@ class CategoryItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
-              Image.network(
-                "${ApiRoutes.categoryUrl}/${categoryEntity.image}",
+              CachedNetworkImage(
+                imageUrl: "${ApiRoutes.categoryUrl}/${categoryEntity.image}",
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,

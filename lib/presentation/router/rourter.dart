@@ -94,5 +94,10 @@ class AppRouter extends $AppRouter {
           path: '/edit-reservation-page',
           guards: [AuthGuard()],
         ),
+        AutoRoute(
+          page: AddMenuPageRoute.page,
+          path: '/add-menu-page',
+          guards: [AuthGuard()],
+        ),
       ];
 }

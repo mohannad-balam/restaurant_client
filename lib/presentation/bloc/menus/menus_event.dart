@@ -7,4 +7,22 @@ sealed class MenusEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetMenusEvent extends MenusEvent{}
+class GetMenusEvent extends MenusEvent {}
+
+class CreateMenuEvent extends MenusEvent {
+  final CreateMenuRequest request;
+
+  const CreateMenuEvent({required this.request});
+}
+
+class UpdateMenuEvent extends MenusEvent {
+  final CreateMenuRequest request;
+
+  const UpdateMenuEvent({required this.request});
+}
+
+class DeleteMenuEvent extends MenusEvent {
+  final String id;
+
+  const DeleteMenuEvent({required this.id});
+}

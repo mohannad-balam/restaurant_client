@@ -18,7 +18,10 @@ import 'package:reservation_client/domain/repositories/table/table_repository.da
 import 'package:reservation_client/domain/usecases/auth/get_user_info_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/add_category_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
+import 'package:reservation_client/domain/usecases/menus/create_menu_usecase.dart';
+import 'package:reservation_client/domain/usecases/menus/delete_menu_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
+import 'package:reservation_client/domain/usecases/menus/update_menu_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/create_reservation_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/delete_reservation_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/get_reservations_usecase.dart';
@@ -123,4 +126,9 @@ Future<void> _setupUsecases() async {
       .registerSingleton<DeleteReservationUsecase>(DeleteReservationUsecase());
   locator
       .registerSingleton<UpdateReservationUsecase>(UpdateReservationUsecase());
+
+  ///menus
+  locator.registerSingleton<CreateMenuUsecase>(CreateMenuUsecase());
+  locator.registerSingleton<UpdateMenuUsecase>(UpdateMenuUsecase());
+  locator.registerSingleton<DeleteMenuUsecase>(DeleteMenuUsecase());
 }

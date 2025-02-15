@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 
@@ -6,7 +7,8 @@ import '../../core/constant/api_routes.dart';
 class MenuItem extends StatelessWidget {
   final MenuEntity menuEntity;
 
-  const MenuItem({super.key, 
+  const MenuItem({
+    super.key,
     required this.menuEntity,
   });
 
@@ -25,8 +27,8 @@ class MenuItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                "${ApiRoutes.menuUrl}/${menuEntity.image}",
+              child: CachedNetworkImage(
+                imageUrl: "${ApiRoutes.menuUrl}/${menuEntity.image}",
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,
@@ -37,13 +39,49 @@ class MenuItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    menuEntity.name!,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.teal[700],
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          menuEntity.name!,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.teal[700],
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        onSelected: (value) {
+                          if (value == 'edit') {
+                          } else if (value == 'delete') {}
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: 'edit',
+                            child: Row(
+                              children: [
+                                Icon(Icons.edit, color: Colors.teal),
+                                SizedBox(width: 10),
+                                Text("Edit"),
+                              ],
+                            ),
+                          ),
+                          const PopupMenuItem(
+                            value: 'delete',
+                            child: Row(
+                              children: [
+                                Icon(Icons.delete, color: Colors.red),
+                                SizedBox(width: 10),
+                                Text("Delete"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   const SizedBox(height: 5),
                   Text(

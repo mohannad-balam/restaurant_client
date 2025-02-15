@@ -11,10 +11,10 @@ class ApiRoutes {
   static String createCategory = '$baseUrl/create-category';
   static String updateCategory(String id) => '$baseUrl/update-category/$id';
   static String deleteCategory(String id) => '$baseUrl/delete-category/$id';
-  static String menusCategory(String id) => '$baseUrl/admin-categories/$id';
+  static String menusCategory(String id) => '$baseUrl/get-categories/$id';
 
   /// menus
-  static String menus = '$baseUrl/menus';
+  static String menus = '$baseUrl/get-menus';
   static String createMenu = '$baseUrl/create-menu';
   static String updateMenu(String id) => '$baseUrl/update-menu/$id';
   static String deleteMenu(String id) => '$baseUrl/delete-menu/$id';
