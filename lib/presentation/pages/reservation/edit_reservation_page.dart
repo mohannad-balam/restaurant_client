@@ -7,54 +7,62 @@ import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/constant/asset_files.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
-import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
+import 'package:reservation_client/domain/entities/reservation/reservation_entity.dart';
 import 'package:reservation_client/domain/entities/table/table_entity.dart';
 import 'package:reservation_client/presentation/bloc/reservation/reservation_bloc.dart';
 import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 
-import '../../../core/services/injectables/locator.dart';
-import '../../../core/services/localDB/local_db_service.dart';
+import '../../../data/models/request/reservation/reservation_request.dart';
 
 @RoutePage()
-class CreateReservationPage extends StatefulWidget {
-  const CreateReservationPage({super.key});
+class EditReservationPage extends StatefulWidget {
+  final ReservationEntity reservation;
+
+  const EditReservationPage({super.key, required this.reservation});
 
   @override
-  State<CreateReservationPage> createState() => _CreateReservationPageState();
+  State<EditReservationPage> createState() => _EditReservationPageState();
 }
 
-class _CreateReservationPageState extends State<CreateReservationPage> {
+class _EditReservationPageState extends State<EditReservationPage> {
   final _formKey = GlobalKey<FormState>();
 
-  // Controllers for text fields
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _guestNumberController = TextEditingController();
+  late TextEditingController _nameController;
+  late TextEditingController _emailController;
+  late TextEditingController _phoneController;
+  late TextEditingController _guestNumberController;
 
-  // Dropdown and DatePicker variables
-  // ignore: unused_field
   int? _selectedTableId;
   DateTime? _reservationDate;
 
   @override
   void initState() {
-    _nameController.text = locator<LocalDBService>().getUserInfo()?.name ?? '';
-    _emailController.text =
-        locator<LocalDBService>().getUserInfo()?.email ?? '';
+    _nameController = TextEditingController(text: widget.reservation.firstName);
+    _emailController = TextEditingController(text: widget.reservation.email);
+    _phoneController =
+        TextEditingController(text: widget.reservation.telNumber);
+    _guestNumberController =
+        TextEditingController(text: widget.reservation.guestNumber.toString());
+    _reservationDate = DateTime.parse(widget.reservation.resDate!);
+    _selectedTableId = widget.reservation.tableId;
     BlocProvider.of<TablesBloc>(context).add(GetAvailableTablesEvent());
     super.initState();
   }
 
   Future<void> _pickDateTime(BuildContext context) async {
     final now = DateTime.now();
+    final initialDate = _reservationDate ?? now;
+
+    // Ensure initialDate is not before firstDate
+    final correctedInitialDate = initialDate.isBefore(now) ? now : initialDate;
 
     // Pick Date
     final date = await showDatePicker(
       context: context,
-      initialDate: now,
+      initialDate: correctedInitialDate,
       firstDate: now,
-      lastDate: now.add(const Duration(days: 7)),
+      lastDate: now.add(
+          const Duration(days: 365)), // Allow reservations up to a year ahead
     );
 
     if (date == null) return; // Cancelled
@@ -62,7 +70,7 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
     // Pick Time
     final time = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: TimeOfDay.fromDateTime(_reservationDate ?? now),
     );
 
     if (time == null) return; // Cancelled
@@ -82,9 +90,7 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Reservation Form'),
-      ),
+      appBar: AppBar(title: const Text('Edit Reservation')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -93,61 +99,40 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Lottie.asset(
-                  AssetLotties.reservations,
-                  repeat: true,
-                  animate: true,
-                ),
+                Lottie.asset(AssetLotties.reservations,
+                    repeat: true, animate: true),
                 const SizedBox(height: 16),
-                // First Name
                 CustomTextField(
-                  enabled: false,
                   label: 'Name',
+                  enabled: false,
                   controller: _nameController,
                   icon: Icons.person,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.maxLength(20)
-                  ]),
+                  validator: FormBuilderValidators.required(),
                 ),
                 const SizedBox(height: 16),
-                // Email
                 CustomTextField(
+                  label: 'Email',
                   enabled: false,
-                  label: 'email',
                   controller: _emailController,
                   icon: Icons.email,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.maxLength(20)
-                  ]),
+                  validator: FormBuilderValidators.email(),
                 ),
                 const SizedBox(height: 16),
-                // Phone Number
                 CustomTextField(
                   label: 'Phone Number',
                   controller: _phoneController,
                   icon: Icons.phone,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.phoneNumber()
-                  ]),
+                  validator: FormBuilderValidators.required(),
                 ),
                 const SizedBox(height: 16),
-                // Guest Number
                 CustomTextField(
                   label: 'Guest Number',
                   controller: _guestNumberController,
                   icon: Icons.people,
-                  validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                    FormBuilderValidators.positiveNumber(),
-                    FormBuilderValidators.max(8),
-                  ]),
+                  validator: FormBuilderValidators.numeric(),
                   keyboardType: TextInputType.number,
                 ),
                 const SizedBox(height: 16),
-                // Reservation Date Picker
                 TextButton.icon(
                   onPressed: () => _pickDateTime(context),
                   icon: const Icon(Icons.calendar_today),
@@ -159,7 +144,6 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                // Table Dropdown
                 BlocBuilder<TablesBloc, TablesState>(
                   builder: (context, state) {
                     if (state is TablesLoaded) {
@@ -169,25 +153,21 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                           labelText: 'Select Table',
                           border: OutlineInputBorder(),
                         ),
-                        value: state.tables.first,
+                        value: state.tables.firstWhere(
+                          (table) => table.id == _selectedTableId,
+                          orElse: () => state.tables.first,
+                        ),
                         items: state.tables
                             .map((table) => DropdownMenuItem(
                                   value: table,
                                   child: Text(
-                                      "${table.name.toString()} (${table.guestNumber.toString()} guests) (${table.location.toString()})"),
+                                      "${table.name} (${table.guestNumber} guests) (${table.location})"),
                                 ))
                             .toList(),
                         onChanged: (value) {
                           setState(() {
-                            print("selected table id => ${value?.id}");
                             _selectedTableId = value?.id;
                           });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Please select a table';
-                          }
-                          return null;
                         },
                       );
                     }
@@ -195,26 +175,33 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                   },
                 ),
                 const SizedBox(height: 24),
-                // Submit Button
                 SizedBox(
-                    width: double.infinity,
-                    child: MainButton(
-                        title: 'Submit Reservation',
-                        onPressed: () {
-                          BlocProvider.of<ReservationBloc>(context)
-                              .add(CreateReservationEvent(
-                                  reservationRequest: ReservationRequest(
-                            firstName: _nameController.text,
-                            lastName: _nameController.text,
-                            email: _emailController.text,
-                            telNumber: _phoneController.text,
-                            guestNumber: int.parse(_guestNumberController.text),
-                            resDate: HelpUtils.format_Y_M_D_containing_hours(
-                                _reservationDate!),
-                            tableId: _selectedTableId,
-                          )));
-                        },
-                        borderStyle: false)),
+                  width: double.infinity,
+                  child: MainButton(
+                    title: 'Update Reservation',
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        BlocProvider.of<ReservationBloc>(context).add(
+                          UpdateReservationEvent(
+                            reservationRequest: ReservationRequest(
+                              id: widget.reservation.id.toString(),
+                              firstName: _nameController.text,
+                              lastName: widget.reservation.lastName,
+                              email: _emailController.text,
+                              telNumber: _phoneController.text,
+                              guestNumber:
+                                  int.parse(_guestNumberController.text),
+                              resDate: HelpUtils.format_Y_M_D_containing_hours(
+                                  _reservationDate!),
+                              tableId: _selectedTableId,
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    borderStyle: false,
+                  ),
+                ),
               ],
             ),
           ),

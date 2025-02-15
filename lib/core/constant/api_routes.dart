@@ -26,7 +26,7 @@ class ApiRoutes {
   static String deleteTable(String id) => '$baseUrl/delete-table/$id';
 
   /// reservations
-  static String reservations = '$baseUrl/reservations';
+  static String reservations = '$baseUrl/get-reservations';
   static String createReservation = '$baseUrl/create-reservation';
   static String updateReservation(String id) =>
       '$baseUrl/update-reservation/$id';

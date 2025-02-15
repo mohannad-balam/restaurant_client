@@ -15,11 +15,19 @@ class TableItem extends StatelessWidget {
     required this.tableEntity,
   });
 
-  Color getStatusColor(String status) {
+  Color getLocationColor(String status) {
     return status == 'front'
         ? AppColors.successColor
         : status == 'inside'
             ? AppColors.secondColor
+            : AppColors.warningColor;
+  }
+
+  Color getStatusColor(String status) {
+    return status == 'available'
+        ? AppColors.successColor
+        : status == 'pending'
+            ? Colors.amber
             : AppColors.warningColor;
   }
 
@@ -55,20 +63,32 @@ class TableItem extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: getStatusColor(tableEntity.location!),
+                      color: getLocationColor(tableEntity.location!),
                     ),
                   ),
                 ],
               ),
             ),
-            Text(
-              "${tableEntity.guestNumber.toString()} guests",
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.teal,
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              Text(
+                "${tableEntity.guestNumber.toString()} guests",
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                tableEntity.status.toString(),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: getStatusColor(tableEntity.status.toString()),
+                ),
+              ),
+            ]),
             const SizedBox(width: 10),
             PopupMenuButton<String>(
               onSelected: (value) {

@@ -1,42 +1,52 @@
-class ReservationRequest {
-  String? id;
+class ReservationModel {
+  int? id;
   String? firstName;
   String? lastName;
   String? email;
   String? telNumber;
-  int? guestNumber;
   String? resDate;
   int? tableId;
+  int? guestNumber;
+  String? createdAt;
+  String? updatedAt;
 
-  ReservationRequest(
+  ReservationModel(
       {this.id,
       this.firstName,
       this.lastName,
       this.email,
       this.telNumber,
-      this.guestNumber,
       this.resDate,
-      this.tableId});
+      this.tableId,
+      this.guestNumber,
+      this.createdAt,
+      this.updatedAt});
 
-  ReservationRequest.fromJson(Map<String, dynamic> json) {
+  ReservationModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     firstName = json['first_name'];
     lastName = json['last_name'];
     email = json['email'];
     telNumber = json['tel_number'];
-    guestNumber = json['guest_number'];
     resDate = json['res_date'];
     tableId = json['table_id'];
+    guestNumber = json['guest_number'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['first_name'] = this.firstName;
     data['last_name'] = this.lastName;
     data['email'] = this.email;
     data['tel_number'] = this.telNumber;
-    data['guest_number'] = this.guestNumber;
     data['res_date'] = this.resDate;
     data['table_id'] = this.tableId;
+    data['guest_number'] = this.guestNumber;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
 }

@@ -7,8 +7,24 @@ sealed class ReservationEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class CreateReservationEvent extends ReservationEvent{
+class GetReservationsEvent extends ReservationEvent {
+  const GetReservationsEvent();
+}
+
+class CreateReservationEvent extends ReservationEvent {
   final ReservationRequest reservationRequest;
 
   const CreateReservationEvent({required this.reservationRequest});
+}
+
+class DeleteReservationEvent extends ReservationEvent {
+  final String id;
+
+  const DeleteReservationEvent({required this.id});
+}
+
+class UpdateReservationEvent extends ReservationEvent {
+  final ReservationRequest reservationRequest;
+
+  const UpdateReservationEvent({required this.reservationRequest});
 }

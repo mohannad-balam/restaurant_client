@@ -115,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                       color: theme.colorScheme.secondary,
                       onTap: () {
                         locator<AppRouter>()
-                            .push(const CreateReservationPageRoute());
+                            .push(const ReservationsPageRoute());
                       },
                     ),
                     // Example Future Feature Card
