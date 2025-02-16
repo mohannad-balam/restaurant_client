@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 40),
               // Welcome Message
               Text(
-                'Welcome to the Reservation App',
+                'Welcome Admin!',
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: theme.colorScheme.primary,
@@ -108,9 +108,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     // Reservation Card
                     SquareCard(
-                      icon: Icons.event_seat,
+                      icon: Icons.book,
                       iconColor: theme.colorScheme.primary,
-                      label: 'Reservation',
+                      label: 'Reservations',
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {
@@ -120,9 +120,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     // Example Future Feature Card
                     SquareCard(
-                      icon: Icons.event_seat,
+                      icon: Icons.table_bar,
                       iconColor: theme.colorScheme.primary,
-                      label: 'Table',
+                      label: 'Tables',
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {
