@@ -1,8 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/data/models/request/tables/create_table_request.dart';
 import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
+
+import '../../../core/common/widgets/custom_text_field.dart';
 
 @RoutePage()
 class AddTablePage extends StatefulWidget {
@@ -30,19 +34,23 @@ class _AddTablePageState extends State<AddTablePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
+              CustomTextField(
+                label: 'Table Name',
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: "Table Name"),
-                validator: (value) =>
-                    value!.isEmpty ? "Enter table name" : null,
+                icon: Icons.table_bar,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                ]),
               ),
               const SizedBox(height: 10),
-              TextFormField(
+              CustomTextField(
+                label: 'Guest Number',
                 controller: _guestNumberController,
-                decoration: const InputDecoration(labelText: "Guest Number"),
-                keyboardType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? "Enter guest number" : null,
+                icon: Icons.emoji_people,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                  FormBuilderValidators.numeric(),
+                ]),
               ),
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
@@ -75,7 +83,7 @@ class _AddTablePageState extends State<AddTablePage> {
               const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
-                child: ElevatedButton(
+                child: MainButton(
                   onPressed: () {
                     debugPrint('add table');
                     BlocProvider.of<TablesBloc>(context).add(CreateTableEvent(
@@ -86,7 +94,8 @@ class _AddTablePageState extends State<AddTablePage> {
                       location: _selectedLocation,
                     )));
                   },
-                  child: const Text("Submit"),
+                  title: 'Add Table',
+                  borderStyle: false,
                 ),
               ),
             ],

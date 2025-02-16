@@ -3,10 +3,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
+
+import '../../../core/common/widgets/custom_text_field.dart';
+import '../../../core/common/widgets/main_button.dart';
 
 @RoutePage()
 class EditMenuPage extends StatefulWidget {
@@ -86,30 +90,46 @@ class _EditMenuPageState extends State<EditMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Edit Menu")),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
+            CustomTextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: "Name"),
+              label: 'Name',
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(),
+              ]),
+              icon: Icons.menu,
+              keyboardType: TextInputType.name,
             ),
-            TextField(
+            CustomTextField(
               controller: _descriptionController,
-              decoration: const InputDecoration(labelText: "Description"),
+              label: 'Description',
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(),
+              ]),
+              icon: Icons.description,
+              keyboardType: TextInputType.text,
             ),
-            TextField(
-              controller: _priceController,
-              decoration: const InputDecoration(labelText: "Price"),
+            CustomTextField(
+              controller: _nameController,
+              label: 'Price',
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(),
+                FormBuilderValidators.numeric(),
+              ]),
+              icon: Icons.price_change,
               keyboardType: TextInputType.number,
             ),
             const SizedBox(height: 20),
             _selectedImage != null
                 ? Image.file(_selectedImage!, height: 100)
                 : const Text("No image selected"),
-            ElevatedButton(
+            MainButton(
               onPressed: _pickImage,
-              child: const Text("Pick Image"),
+              title: 'Pick Image',
+              borderStyle: true,
             ),
             const SizedBox(height: 20),
 
@@ -169,9 +189,10 @@ class _EditMenuPageState extends State<EditMenuPage> {
             ),
 
             const SizedBox(height: 20),
-            ElevatedButton(
+            MainButton(
               onPressed: _submitMenu,
-              child: const Text("Submit"),
+              title: 'Update Menu',
+              borderStyle: false,
             ),
           ],
         ),

@@ -2,7 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
+import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'dart:io';
 
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
@@ -58,26 +61,32 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
       appBar: AppBar(
         title: const Text('Add Category'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextFormField(
+              CustomTextField(
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: 'Category Name'),
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter a name' : null,
+                label: 'Name',
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                ]),
+                icon: Icons.category,
+                keyboardType: TextInputType.name,
               ),
               const SizedBox(height: 10),
-              TextFormField(
+              CustomTextField(
                 controller: _descriptionController,
-                decoration: const InputDecoration(labelText: 'Description'),
-                maxLines: 3,
-                validator: (value) =>
-                    value!.isEmpty ? 'Please enter a description' : null,
+                label: 'Description',
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                ]),
+                icon: Icons.description,
+                keyboardType: TextInputType.text,
               ),
               const SizedBox(height: 10),
               Row(
@@ -87,17 +96,19 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
                       : Image.file(_image!,
                           width: 100, height: 100, fit: BoxFit.cover),
                   const SizedBox(width: 10),
-                  ElevatedButton(
+                  MainButton(
                     onPressed: _pickImage,
-                    child: const Text('Pick Image'),
+                    title: 'Pick Image',
+                    borderStyle: true,
                   ),
                 ],
               ),
               const SizedBox(height: 20),
               Center(
-                child: ElevatedButton(
+                child: MainButton(
                   onPressed: _submitForm,
-                  child: const Text('Add Category'),
+                  title: 'Add Category',
+                  borderStyle: false,
                 ),
               ),
             ],

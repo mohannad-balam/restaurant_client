@@ -11,6 +11,8 @@ import 'package:reservation_client/domain/usecases/menus/delete_menu_usecase.dar
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/update_menu_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
+
+import '../../widgets/custom_snackbar.dart';
 part 'menus_event.dart';
 part 'menus_state.dart';
 
@@ -22,6 +24,7 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
         List<MenuEntity> menus = await locator<GetMenusUsecase>().call();
         emit(MenusLoaded(menus: menus));
       } catch (e) {
+        mySnackBar(e.toString(), false);
         emit(MenusError(message: e.toString()));
       }
     });
@@ -34,8 +37,11 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
         );
         context.loaderOverlay.hide();
         locator<AppRouter>().maybePop();
+        mySnackBar("Added Successfully", true);
+        add(GetMenusEvent());
       } catch (e) {
         context.loaderOverlay.hide();
+        mySnackBar(e.toString(), false);
         emit(MenusError(message: e.toString()));
       }
     });
@@ -47,9 +53,11 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
           params: event.id,
         );
         context.loaderOverlay.hide();
+        mySnackBar("Deleted Successfully", true);
         add(GetMenusEvent());
       } catch (e) {
         context.loaderOverlay.hide();
+        mySnackBar(e.toString(), false);
         emit(MenusError(message: e.toString()));
       }
     });
@@ -61,9 +69,12 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
           params: event.request,
         );
         context.loaderOverlay.hide();
+        mySnackBar("Updated Successfully", true);
         locator<AppRouter>().maybePop();
+        add(GetMenusEvent());
       } catch (e) {
         context.loaderOverlay.hide();
+        mySnackBar(e.toString(), false);
         emit(MenusError(message: e.toString()));
       }
     });

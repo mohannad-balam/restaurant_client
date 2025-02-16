@@ -104,7 +104,6 @@ class _EditReservationPageState extends State<EditReservationPage> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   label: 'Name',
-                  enabled: false,
                   controller: _nameController,
                   icon: Icons.person,
                   validator: FormBuilderValidators.required(),
@@ -112,7 +111,6 @@ class _EditReservationPageState extends State<EditReservationPage> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   label: 'Email',
-                  enabled: false,
                   controller: _emailController,
                   icon: Icons.email,
                   validator: FormBuilderValidators.email(),

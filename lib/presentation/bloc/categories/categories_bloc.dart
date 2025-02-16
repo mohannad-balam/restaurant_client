@@ -12,6 +12,8 @@ import 'package:reservation_client/domain/usecases/categories/get_categories_use
 import 'package:reservation_client/domain/usecases/categories/update_category_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 
+import '../../widgets/custom_snackbar.dart';
+
 part 'categories_event.dart';
 part 'categories_state.dart';
 
@@ -35,9 +37,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         await locator<CreateCategoryUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().maybePop();
-        // add(const GetCategoriesEvent());
+        mySnackBar("Added Successfulyy", true);
+        add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
+        mySnackBar(e.toString(), false);
         emit(CategoriesError(message: e.toString()));
       }
     });
@@ -49,9 +53,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         await locator<UpdateCategoryUsecase>().call(params: event.request);
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().maybePop();
-        // add(const GetCategoriesEvent());
+        mySnackBar("Updated Successfulyy", true);
+        add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
+        mySnackBar(e.toString(), false);
         emit(CategoriesError(message: e.toString()));
       }
     });
@@ -62,9 +68,11 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         buildContext.loaderOverlay.show();
         await locator<DeleteCategoryUsecase>().call(params: event.id);
         buildContext.loaderOverlay.hide();
+        mySnackBar("Deleted Successfulyy", true);
         add(const GetCategoriesEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
+        mySnackBar(e.toString(), false);
         emit(CategoriesError(message: e.toString()));
       }
     });

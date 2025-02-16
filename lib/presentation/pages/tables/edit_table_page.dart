@@ -1,9 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:reservation_client/data/models/request/tables/create_table_request.dart';
 import 'package:reservation_client/domain/entities/table/table_entity.dart';
 import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
+
+import '../../../core/common/widgets/custom_text_field.dart';
 
 @RoutePage()
 class EditTablePage extends StatefulWidget {
@@ -33,7 +36,7 @@ class _EditTablePageState extends State<EditTablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Table")),
+      appBar: AppBar(title: const Text("Edit Table")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -41,19 +44,23 @@ class _EditTablePageState extends State<EditTablePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextFormField(
+              CustomTextField(
+                label: 'Table Name',
                 controller: _nameController,
-                decoration: const InputDecoration(labelText: "Table Name"),
-                validator: (value) =>
-                    value!.isEmpty ? "Enter table name" : null,
+                icon: Icons.table_bar,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                ]),
               ),
               const SizedBox(height: 10),
-              TextFormField(
+              CustomTextField(
+                label: 'Guest Number',
                 controller: _guestNumberController,
-                decoration: const InputDecoration(labelText: "Guest Number"),
-                keyboardType: TextInputType.number,
-                validator: (value) =>
-                    value!.isEmpty ? "Enter guest number" : null,
+                icon: Icons.emoji_people,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(),
+                  FormBuilderValidators.numeric(),
+                ]),
               ),
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(

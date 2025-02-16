@@ -12,9 +12,6 @@ import 'package:reservation_client/domain/entities/table/table_entity.dart';
 import 'package:reservation_client/presentation/bloc/reservation/reservation_bloc.dart';
 import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 
-import '../../../core/services/injectables/locator.dart';
-import '../../../core/services/localDB/local_db_service.dart';
-
 @RoutePage()
 class CreateReservationPage extends StatefulWidget {
   const CreateReservationPage({super.key});
@@ -39,9 +36,6 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
 
   @override
   void initState() {
-    _nameController.text = locator<LocalDBService>().getUserInfo()?.name ?? '';
-    _emailController.text =
-        locator<LocalDBService>().getUserInfo()?.email ?? '';
     BlocProvider.of<TablesBloc>(context).add(GetAvailableTablesEvent());
     super.initState();
   }
@@ -101,7 +95,6 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                 const SizedBox(height: 16),
                 // First Name
                 CustomTextField(
-                  enabled: false,
                   label: 'Name',
                   controller: _nameController,
                   icon: Icons.person,
@@ -113,7 +106,6 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                 const SizedBox(height: 16),
                 // Email
                 CustomTextField(
-                  enabled: false,
                   label: 'email',
                   controller: _emailController,
                   icon: Icons.email,

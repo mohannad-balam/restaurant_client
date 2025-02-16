@@ -6,6 +6,7 @@ import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 import 'package:reservation_client/presentation/widgets/table_item.dart';
+
 import '../../bloc/tables/tables_bloc.dart';
 
 @RoutePage()
@@ -17,6 +18,8 @@ class TablesPage extends StatefulWidget {
 }
 
 class _TablesPageState extends State<TablesPage> {
+  String selectedStatus = "All"; // Default selected filter
+
   @override
   void initState() {
     BlocProvider.of<TablesBloc>(context).add(GetAvailableTablesEvent());
@@ -26,29 +29,54 @@ class _TablesPageState extends State<TablesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Tables"),
-      ),
-      body: BlocBuilder<TablesBloc, TablesState>(
-        builder: (context, state) {
-          if (state is TablesLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (state is TablesLoaded) {
-            return ListView.builder(
-              itemCount: state.tables.length,
-              itemBuilder: (BuildContext context, int index) {
-                return TableItem(tableEntity: state.tables[index]);
+      appBar: AppBar(title: const Text("Tables")),
+      body: Column(
+        children: [
+          // Scrollable Filter Chips
+          SizedBox(
+            height: 50, // Adjust height as needed
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                children: [
+                  _buildChip("All"),
+                  _buildChip("Available"),
+                  _buildChip("Pending"),
+                  _buildChip("Unavailable"),
+                ],
+              ),
+            ),
+          ),
+
+          // Tables List
+          Expanded(
+            child: BlocBuilder<TablesBloc, TablesState>(
+              builder: (context, state) {
+                if (state is TablesLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is TablesLoaded) {
+                  // Filter tables based on selected status
+                  final filteredTables = state.tables.where((table) {
+                    if (selectedStatus == "All") return true;
+                    return table.status?.toLowerCase() ==
+                        selectedStatus.toLowerCase();
+                  }).toList();
+
+                  return ListView.builder(
+                    itemCount: filteredTables.length,
+                    itemBuilder: (context, index) {
+                      return TableItem(tableEntity: filteredTables[index]);
+                    },
+                  );
+                } else if (state is TablesError) {
+                  return Center(child: Text(state.message));
+                }
+                return const SizedBox();
               },
-            );
-          } else if (state is TablesError) {
-            return Center(
-              child: Text(state.message),
-            );
-          }
-          return const SizedBox();
-        },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -58,6 +86,34 @@ class _TablesPageState extends State<TablesPage> {
           Icons.add,
           color: AppColors.secondeyTextColor,
         ),
+      ),
+    );
+  }
+
+  // Chip Widget
+  Widget _buildChip(String label) {
+    final bool isSelected = selectedStatus == label;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4),
+      child: ChoiceChip(
+        label: Text(label),
+        selected: isSelected,
+        selectedColor: AppColors.mainColor,
+        backgroundColor: Colors.white,
+        labelStyle: TextStyle(
+          color: isSelected ? Colors.white : AppColors.mainColor,
+          fontWeight: FontWeight.bold,
+        ),
+        checkmarkColor: AppColors.secondeyTextColor,
+        shape:
+            const StadiumBorder(side: BorderSide(color: AppColors.mainColor)),
+        onSelected: (bool selected) {
+          if (selected) {
+            setState(() {
+              selectedStatus = label;
+            });
+          }
+        },
       ),
     );
   }
