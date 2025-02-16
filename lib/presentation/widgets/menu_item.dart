@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 
@@ -6,7 +7,8 @@ import '../../core/constant/api_routes.dart';
 class MenuItem extends StatelessWidget {
   final MenuEntity menuEntity;
 
-  const MenuItem({super.key, 
+  const MenuItem({
+    super.key,
     required this.menuEntity,
   });
 
@@ -25,8 +27,8 @@ class MenuItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                "${ApiRoutes.menuUrl}/${menuEntity.image}",
+              child: CachedNetworkImage(
+                imageUrl: "${ApiRoutes.menuUrl}/${menuEntity.image}",
                 width: 80,
                 height: 80,
                 fit: BoxFit.cover,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 
@@ -11,12 +12,13 @@ class CategoryItem extends StatelessWidget {
 
   const CategoryItem({super.key, required this.categoryEntity});
 
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        locator<AppRouter>().push(CategoryMenusPageRoute(id: categoryEntity.id.toString(), categoryName: categoryEntity.name.toString()));
+      onTap: () {
+        locator<AppRouter>().push(CategoryMenusPageRoute(
+            id: categoryEntity.id.toString(),
+            categoryName: categoryEntity.name.toString()));
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -27,8 +29,8 @@ class CategoryItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
-              Image.network(
-                "${ApiRoutes.categoryUrl}/${categoryEntity.image}",
+              CachedNetworkImage(
+                imageUrl: "${ApiRoutes.categoryUrl}/${categoryEntity.image}",
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
