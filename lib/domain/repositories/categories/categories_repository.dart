@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/utils/helpers/mappers/category_mapper.dart';
 import 'package:reservation_client/core/utils/helpers/mappers/menu_mapper.dart';
-import 'package:reservation_client/data/models/request/category/create_category_request.dart';
 import 'package:reservation_client/data/models/response/menu/menu.dart';
 import 'package:reservation_client/data/sources/categories/i_categories_service.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
@@ -55,7 +54,7 @@ class CategoriesRepository extends ICategoriesRepository {
   }
 
   @override
-  Future<void> update(CreateCategoryRequest request) async {
+  Future<void> update(FormData request) async {
     try {
       await locator<ICategoriesService>().update(request);
     } catch (e) {

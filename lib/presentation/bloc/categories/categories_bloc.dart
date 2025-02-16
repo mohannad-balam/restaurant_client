@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
-import 'package:reservation_client/data/models/request/category/create_category_request.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 import 'package:reservation_client/domain/usecases/categories/add_category_usecase.dart';
 import 'package:reservation_client/domain/usecases/categories/delete_category_usecase.dart';

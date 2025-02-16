@@ -60,6 +60,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
           ? await MultipartFile.fromFile(_selectedImage!.path,
               filename: _selectedImage?.path.split('/').last)
           : null,
+      "categories": _selectedCategoryIds,
     });
 
     BlocProvider.of<MenusBloc>(context).add(

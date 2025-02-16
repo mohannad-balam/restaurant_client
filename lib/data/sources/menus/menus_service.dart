@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:reservation_client/core/constant/api_routes.dart';
 import 'package:reservation_client/core/enums/http_methods.dart';
 import 'package:reservation_client/core/services/http/http_service.dart';
@@ -22,6 +21,7 @@ class MenusService extends IMenusService {
   @override
   Future<void> createMenu(FormData request) async {
     try {
+      print(request.fields);
       await locator<HttpService>()
           .request(HttpMethods.POST, ApiRoutes.createMenu, {}, request);
     } catch (e) {
@@ -44,7 +44,7 @@ class MenusService extends IMenusService {
     try {
       String id = request.fields[0].value;
       request.fields.removeAt(0);
-      debugPrint(request.fields.toString());
+      print(request.fields);
       await locator<HttpService>()
           .request(HttpMethods.POST, ApiRoutes.updateMenu(id), {}, request);
     } catch (e) {

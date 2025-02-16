@@ -3,7 +3,6 @@ import 'package:reservation_client/core/constant/api_routes.dart';
 import 'package:reservation_client/core/enums/http_methods.dart';
 import 'package:reservation_client/core/services/http/http_service.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
-import 'package:reservation_client/data/models/request/category/create_category_request.dart';
 import 'package:reservation_client/data/models/response/menu/menu.dart';
 import 'package:reservation_client/data/sources/categories/i_categories_service.dart';
 import '../../models/response/category/category.dart';
@@ -52,13 +51,16 @@ class CategoriesService extends ICategoriesService {
   }
 
   @override
-  Future<void> update(CreateCategoryRequest request) async {
+  Future<void> update(FormData request) async {
     try {
+      String id = request.fields[0].value;
+      request.fields.removeAt(0);
       await locator<HttpService>().request(
-          HttpMethods.PUT,
-          ApiRoutes.updateCategory(request.id.toString()),
-          request.toJson(),
-          null);
+        HttpMethods.POST,
+        ApiRoutes.updateCategory(id),
+        {},
+        request,
+      );
     } catch (e) {
       rethrow;
     }

@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reservation_client/data/models/request/category/create_category_request.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 import 'dart:io';
 
@@ -34,18 +34,24 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
     }
   }
 
-  void _submitForm() {
+  void _submitForm() async {
     if (_formKey.currentState!.validate()) {
       // Handle form submission (e.g., send data to API)
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Category added successfully')),
+      FormData formData = FormData.fromMap({
+        "id": widget.categoryEntity.id,
+        "_method": "PUT",
+        "name": _nameController.text,
+        "description": _descriptionController.text,
+        "image": _image != null
+            ? await MultipartFile.fromFile(_image!.path,
+                filename: _image?.path.split('/').last)
+            : null,
+      });
+      BlocProvider.of<CategoriesBloc>(context).add(
+        UpdateCategoryEvent(
+          request: formData,
+        ),
       );
-      BlocProvider.of<CategoriesBloc>(context).add(UpdateCategoryEvent(
-          request: CreateCategoryRequest(
-              id: widget.categoryEntity.id.toString(),
-              name: _nameController.text,
-              description: _descriptionController.text,
-              image: 'dscfvR')));
     }
   }
 

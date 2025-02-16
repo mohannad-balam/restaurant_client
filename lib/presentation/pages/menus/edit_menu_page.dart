@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
@@ -73,6 +72,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
           ? await MultipartFile.fromFile(_selectedImage!.path,
               filename: _selectedImage?.path.split('/').last)
           : null,
+      "categories": _selectedCategoryIds,
     });
 
     BlocProvider.of<MenusBloc>(context).add(

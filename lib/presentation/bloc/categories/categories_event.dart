@@ -17,7 +17,7 @@ class CreateCategoryEvent extends CategoriesEvent {
 }
 
 class UpdateCategoryEvent extends CategoriesEvent {
-  final CreateCategoryRequest request;
+  final FormData request;
   const UpdateCategoryEvent({required this.request});
 }
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
-import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/domain/usecases/menus/create_menu_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/delete_menu_usecase.dart';
