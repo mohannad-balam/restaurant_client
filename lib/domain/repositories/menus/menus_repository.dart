@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/utils/helpers/mappers/menu_mapper.dart';
-import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
 import 'package:reservation_client/data/models/response/menu/menu.dart';
 import 'package:reservation_client/data/sources/menus/i_menus_service.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
@@ -33,7 +32,7 @@ class MenusRepository extends IMenusRepository {
   }
 
   @override
-  Future<void> updateMenu(CreateMenuRequest request) async {
+  Future<void> updateMenu(FormData request) async {
     try {
       await locator<IMenusService>().updateMenu(request);
     } catch (e) {

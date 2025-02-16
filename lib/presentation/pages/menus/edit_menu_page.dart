@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -49,7 +50,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
     }
   }
 
-  void _submitMenu() {
+  void _submitMenu() async {
     if (_nameController.text.isEmpty ||
         _descriptionController.text.isEmpty ||
         _priceController.text.isEmpty ||
@@ -62,16 +63,21 @@ class _EditMenuPageState extends State<EditMenuPage> {
       return;
     }
 
+    FormData formData = FormData.fromMap({
+      "id": widget.menuEntity.id,
+      "_method": "PUT",
+      "name": _nameController.text,
+      "description": _descriptionController.text,
+      'price': double.parse(_priceController.text),
+      "image": _selectedImage != null
+          ? await MultipartFile.fromFile(_selectedImage!.path,
+              filename: _selectedImage?.path.split('/').last)
+          : null,
+    });
+
     BlocProvider.of<MenusBloc>(context).add(
       UpdateMenuEvent(
-        request: CreateMenuRequest(
-          id: widget.menuEntity.id.toString(),
-          name: _nameController.text,
-          description: _descriptionController.text,
-          price: double.parse(_priceController.text),
-          image: _selectedImage?.path.toString() ?? '',
-          categories: _selectedCategoryIds, // Pass selected category IDs
-        ),
+        request: formData,
       ),
     );
   }

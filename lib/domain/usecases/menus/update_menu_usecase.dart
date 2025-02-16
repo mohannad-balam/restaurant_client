@@ -1,11 +1,11 @@
+import 'package:dio/dio.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/common/usecase/usecase.dart';
-import 'package:reservation_client/data/models/request/menu/create_menu_request.dart';
 import 'package:reservation_client/domain/repositories/menus/i_menus_repository.dart';
 
-class UpdateMenuUsecase extends IUseCase<void, CreateMenuRequest> {
+class UpdateMenuUsecase extends IUseCase<void, FormData> {
   @override
-  Future<void> call({CreateMenuRequest? params}) async {
+  Future<void> call({FormData? params}) async {
     return await locator<IMenusRepository>().updateMenu(params!);
   }
 }

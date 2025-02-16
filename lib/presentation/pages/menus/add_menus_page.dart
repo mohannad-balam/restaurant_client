@@ -73,94 +73,96 @@ class _AddMenuPageState extends State<AddMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Add Menu")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: "Name"),
-            ),
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(labelText: "Description"),
-            ),
-            TextField(
-              controller: _priceController,
-              decoration: const InputDecoration(labelText: "Price"),
-              keyboardType: TextInputType.number,
-            ),
-            const SizedBox(height: 20),
-            _selectedImage != null
-                ? Image.file(_selectedImage!, height: 100)
-                : const Text("No image selected"),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: const Text("Pick Image"),
-            ),
-            const SizedBox(height: 20),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(labelText: "Name"),
+              ),
+              TextField(
+                controller: _descriptionController,
+                decoration: const InputDecoration(labelText: "Description"),
+              ),
+              TextField(
+                controller: _priceController,
+                decoration: const InputDecoration(labelText: "Price"),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 20),
+              _selectedImage != null
+                  ? Image.file(_selectedImage!, height: 100)
+                  : const Text("No image selected"),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text("Pick Image"),
+              ),
+              const SizedBox(height: 20),
 
-            // Multi-Select Dropdown for Categories
-            BlocBuilder<CategoriesBloc, CategoriesState>(
-              builder: (context, state) {
-                if (state is CategoriesLoading) {
-                  return const CircularProgressIndicator();
-                } else if (state is CategoriesLoaded) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      DropdownButtonFormField<int>(
-                        isExpanded: true,
-                        decoration: const InputDecoration(
-                          labelText: "Select Categories",
-                          border: OutlineInputBorder(),
-                        ),
-                        items: state.categories.map((category) {
-                          return DropdownMenuItem<int>(
-                            value: category.id,
-                            child: Text(category.name.toString()),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          if (value != null &&
-                              !_selectedCategoryIds.contains(value)) {
-                            setState(() {
-                              _selectedCategoryIds.add(value);
-                            });
-                          }
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      Wrap(
-                        children: _selectedCategoryIds.map((id) {
-                          String name = state.categories
-                              .firstWhere((cat) => cat.id == id)
-                              .name
-                              .toString();
-                          return Chip(
-                            label: Text(name),
-                            onDeleted: () {
+              // Multi-Select Dropdown for Categories
+              BlocBuilder<CategoriesBloc, CategoriesState>(
+                builder: (context, state) {
+                  if (state is CategoriesLoading) {
+                    return const CircularProgressIndicator();
+                  } else if (state is CategoriesLoaded) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        DropdownButtonFormField<int>(
+                          isExpanded: true,
+                          decoration: const InputDecoration(
+                            labelText: "Select Categories",
+                            border: OutlineInputBorder(),
+                          ),
+                          items: state.categories.map((category) {
+                            return DropdownMenuItem<int>(
+                              value: category.id,
+                              child: Text(category.name.toString()),
+                            );
+                          }).toList(),
+                          onChanged: (value) {
+                            if (value != null &&
+                                !_selectedCategoryIds.contains(value)) {
                               setState(() {
-                                _selectedCategoryIds.remove(id);
+                                _selectedCategoryIds.add(value);
                               });
-                            },
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  );
-                } else {
-                  return const Text("Failed to load categories");
-                }
-              },
-            ),
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 10),
+                        Wrap(
+                          children: _selectedCategoryIds.map((id) {
+                            String name = state.categories
+                                .firstWhere((cat) => cat.id == id)
+                                .name
+                                .toString();
+                            return Chip(
+                              label: Text(name),
+                              onDeleted: () {
+                                setState(() {
+                                  _selectedCategoryIds.remove(id);
+                                });
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return const Text("Failed to load categories");
+                  }
+                },
+              ),
 
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _submitMenu,
-              child: const Text("Submit"),
-            ),
-          ],
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _submitMenu,
+                child: const Text("Submit"),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -16,7 +16,7 @@ class CreateMenuEvent extends MenusEvent {
 }
 
 class UpdateMenuEvent extends MenusEvent {
-  final CreateMenuRequest request;
+  final FormData request;
 
   const UpdateMenuEvent({required this.request});
 }

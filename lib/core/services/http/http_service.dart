@@ -55,7 +55,7 @@ class HttpService {
       } else if (httpMethod == HttpMethods.PUT) {
         response = await _dio.put(
           route,
-          data: parameters,
+          data: formData ?? parameters,
           // queryParameters: parameters,
         );
       } else if (httpMethod == HttpMethods.DELETE) {
