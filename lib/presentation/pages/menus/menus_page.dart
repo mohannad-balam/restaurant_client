@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/common/widgets/no_data.dart';
 import '../../bloc/menus/menus_bloc.dart';
 import '../../widgets/menu_item.dart';
 
@@ -39,6 +40,9 @@ class _MenusPageState extends State<MenusPage> {
             return const Center(child: CircularProgressIndicator());
           } else if (state is MenusLoaded) {
             // Show a friendly message if the list is empty.
+            if (state.menus.isEmpty) {
+              return const NoData();
+            }
             if (state.menus.isEmpty) {
               return const Center(
                 child: Text("No menus available at the moment."),
