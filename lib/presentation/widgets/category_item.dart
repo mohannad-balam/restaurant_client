@@ -7,29 +7,25 @@ import '../../core/services/injectables/locator.dart';
 import '../router/rourter.dart';
 import '../router/rourter.gr.dart';
 
-class CategoryItem extends StatefulWidget {
+class CategoryItem extends StatelessWidget {
   final CategoryEntity categoryEntity;
 
   const CategoryItem({super.key, required this.categoryEntity});
 
   @override
-  State<CategoryItem> createState() => _CategoryItemState();
-}
-
-class _CategoryItemState extends State<CategoryItem> {
-  @override
-  void initState() {
-    super.initState();
-    print("image => ${widget.categoryEntity.image}");
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    final name = categoryEntity.name ?? '';
+    final description = categoryEntity.description ?? '';
+
+    return InkWell(
+      // InkWell gives a visual splash on tap
       onTap: () {
-        locator<AppRouter>().push(CategoryMenusPageRoute(
-            id: widget.categoryEntity.id.toString(),
-            categoryName: widget.categoryEntity.name.toString()));
+        locator<AppRouter>().push(
+          CategoryMenusPageRoute(
+            id: categoryEntity.id.toString(),
+            categoryName: name,
+          ),
+        );
       },
       child: Card(
         shape: RoundedRectangleBorder(
@@ -40,22 +36,34 @@ class _CategoryItemState extends State<CategoryItem> {
           borderRadius: BorderRadius.circular(15),
           child: Stack(
             children: [
+              // 1) Background image
               CachedNetworkImage(
-                imageUrl:
-                    "${ApiRoutes.categoryUrl}/${widget.categoryEntity.image}",
+                imageUrl: "${ApiRoutes.categoryUrl}/${categoryEntity.image}",
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: double.infinity,
+                // Optional placeholder while loading
+                placeholder: (context, url) => const Center(
+                  child: Icon(Icons.no_photography),
+                ),
+                // Optional widget if image fails to load
+                errorWidget: (context, url, error) => const Center(
+                  child: Icon(Icons.error, color: Colors.red),
+                ),
               ),
+
+              // 2) Gradient overlay (bottom to transparent)
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Colors.black.withOpacity(0.6), Colors.transparent],
+                    colors: [Colors.black54, Colors.transparent],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                   ),
                 ),
               ),
+
+              // 3) Text content
               Positioned(
                 bottom: 10,
                 left: 10,
@@ -64,20 +72,18 @@ class _CategoryItemState extends State<CategoryItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.categoryEntity.name!,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      name,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
-                    const SizedBox(height: 5),
+                    const SizedBox(height: 4),
                     Text(
-                      widget.categoryEntity.description!,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
+                      description,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.white70,
+                          ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),

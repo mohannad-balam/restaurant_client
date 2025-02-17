@@ -9,65 +9,87 @@ class MenuItem extends StatelessWidget {
   final MenuEntity menuEntity;
 
   const MenuItem({
-    super.key,
+    Key? key,
     required this.menuEntity,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
+
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(12),
       ),
-      elevation: 5,
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl: "${ApiRoutes.menuUrl}/${menuEntity.image}",
-                width: 80,
-                height: 80,
-                fit: BoxFit.cover,
+      elevation: 3,
+      child: InkWell(
+        onTap: () {
+          // TODO: Optionally navigate to a details page or handle a tap event.
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            children: [
+              // Menu Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: CachedNetworkImage(
+                  imageUrl: "${ApiRoutes.menuUrl}/${menuEntity.image}",
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) =>
+                      Container(color: Colors.grey[200]),
+                  errorWidget: (context, url, error) => const Icon(
+                    Icons.image_not_supported,
+                    size: 48,
+                    color: Colors.grey,
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(width: 15),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    menuEntity.name!,
-                    style: const TextStyle(
-                        fontSize: 18,
+              const SizedBox(width: 12),
+
+              // Menu Details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Menu Name
+                    Text(
+                      menuEntity.name ?? '',
+                      style: currentTheme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
-                        color: AppColors.mainColor),
-                  ),
-                  const SizedBox(height: 5),
-                  Text(
-                    menuEntity.description!,
-                    style: currentTheme.textTheme.bodyLarge,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "${menuEntity.price!} D.L",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.mainColor,
+                        color: AppColors.mainColor,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+
+                    // Menu Description
+                    Text(
+                      menuEntity.description ?? '',
+                      style: currentTheme.textTheme.bodyMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Menu Price
+                    Text(
+                      "${menuEntity.price ?? 0} D.L",
+                      style: currentTheme.textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.mainColor,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
