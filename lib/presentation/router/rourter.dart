@@ -51,11 +51,6 @@ class AppRouter extends $AppRouter {
           guards: [AuthGuard()],
         ),
         AutoRoute(
-          page: ConfirmedPageRoute.page,
-          path: '/confirmed-page',
-          guards: [AuthGuard()],
-        ),
-        AutoRoute(
           page: AddCategoryPageRoute.page,
           path: '/add-category-page',
           guards: [AuthGuard()],
