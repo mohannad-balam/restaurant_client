@@ -7,7 +7,6 @@ import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
-
 @RoutePage()
 class ConfirmedPage extends StatelessWidget {
   const ConfirmedPage({super.key});
@@ -33,12 +32,10 @@ class ConfirmedPage extends StatelessWidget {
               // const Icon(Icons.check, size: 30, color: AppColors.successColor,),
               const SizedBox(height: 24),
               // ConfirmedPage message
-               Text(
+              Text(
                 'Reservation Confirmed!',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: theme.colorScheme.primary,
-                  fontSize: 30
-                ),
+                style: theme.textTheme.titleLarge
+                    ?.copyWith(color: theme.colorScheme.primary, fontSize: 30),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 16),
@@ -52,9 +49,12 @@ class ConfirmedPage extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               // Back to Home button
-              MainButton(title: 'Back To Home', onPressed: () {
-                  locator<AppRouter>().replaceAll([const HomePageRoute()]);
-                }, borderStyle: true)
+              MainButton(
+                  title: 'Back To Home',
+                  onPressed: () {
+                    locator<AppRouter>().replaceAll([const HomePageRoute()]);
+                  },
+                  borderStyle: true)
             ],
           ),
         ),

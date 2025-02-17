@@ -17,6 +17,7 @@ class ReservationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentTheme = Theme.of(context);
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -25,17 +26,28 @@ class ReservationItem extends StatelessWidget {
         contentPadding: const EdgeInsets.all(12),
         title: Text(
           "${reservation.firstName} ${reservation.lastName}",
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          style: currentTheme.textTheme.titleLarge!.copyWith(fontSize: 18),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Email: ${reservation.email}"),
-            Text("Phone: ${reservation.telNumber}"),
-            Text("Date: ${reservation.resDate}"),
+            Text(
+              "Email: ${reservation.email}",
+              style: currentTheme.textTheme.bodyLarge,
+            ),
+            Text("Phone: ${reservation.telNumber}",
+                style: currentTheme.textTheme.bodyLarge),
+            Text("Date: ${reservation.resDate?.split('T')[0]}",
+                style: currentTheme.textTheme.bodyLarge),
             Text(
               "Guests: ${reservation.guestNumber}",
-              style: const TextStyle(color: AppColors.mainColor),
+              style: currentTheme.textTheme.bodyLarge!
+                  .copyWith(color: AppColors.mainColor),
+            ),
+            Text(
+              "Table: ${reservation.table}",
+              style: currentTheme.textTheme.bodyLarge!
+                  .copyWith(color: AppColors.mainColor),
             ),
           ],
         ),

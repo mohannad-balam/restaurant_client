@@ -9,16 +9,19 @@ class ReservationEntity {
   int? guestNumber;
   String? createdAt;
   String? updatedAt;
+  String? table;
 
-  ReservationEntity(
-      {this.id,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.telNumber,
-      this.resDate,
-      this.tableId,
-      this.guestNumber,
-      this.createdAt,
-      this.updatedAt});
+  ReservationEntity({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.telNumber,
+    this.resDate,
+    this.tableId,
+    this.guestNumber,
+    this.createdAt,
+    this.updatedAt,
+    this.table,
+  });
 }

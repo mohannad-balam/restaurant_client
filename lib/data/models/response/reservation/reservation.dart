@@ -9,18 +9,21 @@ class ReservationModel {
   int? guestNumber;
   String? createdAt;
   String? updatedAt;
+  String? table;
 
-  ReservationModel(
-      {this.id,
-      this.firstName,
-      this.lastName,
-      this.email,
-      this.telNumber,
-      this.resDate,
-      this.tableId,
-      this.guestNumber,
-      this.createdAt,
-      this.updatedAt});
+  ReservationModel({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.telNumber,
+    this.resDate,
+    this.tableId,
+    this.guestNumber,
+    this.createdAt,
+    this.updatedAt,
+    this.table,
+  });
 
   ReservationModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,6 +36,7 @@ class ReservationModel {
     guestNumber = json['guest_number'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    table = json['table'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +51,7 @@ class ReservationModel {
     data['guest_number'] = this.guestNumber;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
+    data['table'] = this.table;
     return data;
   }
 }

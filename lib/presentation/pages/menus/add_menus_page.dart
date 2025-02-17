@@ -7,6 +7,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
+import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 import 'package:reservation_client/presentation/widgets/custom_snackbar.dart';
@@ -63,7 +64,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
           ? await MultipartFile.fromFile(_selectedImage!.path,
               filename: _selectedImage?.path.split('/').last)
           : null,
-      "categories": _selectedCategoryIds,
+      "categories[]": _selectedCategoryIds,
     });
 
     BlocProvider.of<MenusBloc>(context).add(
@@ -75,6 +76,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTheme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Add Menu")),
       body: SingleChildScrollView(
@@ -100,7 +102,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
               keyboardType: TextInputType.text,
             ),
             CustomTextField(
-              controller: _nameController,
+              controller: _priceController,
               label: 'Price',
               validator: FormBuilderValidators.compose([
                 FormBuilderValidators.required(),
@@ -158,7 +160,12 @@ class _AddMenuPageState extends State<AddMenuPage> {
                               .name
                               .toString();
                           return Chip(
-                            label: Text(name),
+                            deleteIconColor: AppColors.mainColor,
+                            label: Text(
+                              name,
+                              style: currentTheme.textTheme.labelLarge!
+                                  .copyWith(color: AppColors.mainColor),
+                            ),
                             onDeleted: () {
                               setState(() {
                                 _selectedCategoryIds.remove(id);

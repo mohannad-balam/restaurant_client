@@ -12,6 +12,7 @@ class ReservationMapper {
       resDate: reservationModel.resDate,
       tableId: reservationModel.tableId,
       guestNumber: reservationModel.guestNumber,
+      table: reservationModel.table,
     );
   }
 }

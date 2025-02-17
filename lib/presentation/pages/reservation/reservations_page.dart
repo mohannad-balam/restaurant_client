@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/common/widgets/no_data.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
@@ -33,6 +34,9 @@ class _ReservationsPageState extends State<ReservationsPage> {
           if (state is ReservationsLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is ReservationsLoaded) {
+            if (state.reservations.isEmpty) {
+              return const NoData();
+            }
             return ListView.builder(
               padding: const EdgeInsets.all(10),
               itemCount: state.reservations.length,

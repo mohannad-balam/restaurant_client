@@ -12,6 +12,7 @@ import 'package:reservation_client/presentation/bloc/categories/categories_bloc.
 
 import '../../../core/common/widgets/custom_text_field.dart';
 import '../../../core/common/widgets/main_button.dart';
+import '../../../core/theme/app_colors.dart';
 
 @RoutePage()
 class EditMenuPage extends StatefulWidget {
@@ -77,7 +78,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
           ? await MultipartFile.fromFile(_selectedImage!.path,
               filename: _selectedImage?.path.split('/').last)
           : null,
-      "categories": _selectedCategoryIds,
+      "categories[]": _selectedCategoryIds,
     });
 
     BlocProvider.of<MenusBloc>(context).add(
@@ -89,6 +90,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentTheme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(title: const Text("Edit Menu")),
       body: SingleChildScrollView(
@@ -172,7 +174,12 @@ class _EditMenuPageState extends State<EditMenuPage> {
                               .name
                               .toString();
                           return Chip(
-                            label: Text(name),
+                            deleteIconColor: AppColors.mainColor,
+                            label: Text(
+                              name,
+                              style: currentTheme.textTheme.labelLarge!
+                                  .copyWith(color: AppColors.mainColor),
+                            ),
                             onDeleted: () {
                               setState(() {
                                 _selectedCategoryIds.remove(id);
