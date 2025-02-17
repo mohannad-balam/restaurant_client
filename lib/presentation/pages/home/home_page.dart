@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/common/widgets/home_page_tile.dart';
 import '../../../core/services/injectables/locator.dart';
-import '../../../core/services/localDB/local_db_service.dart';
 import '../../../core/utils/helpers/helpers.dart';
 import '../../../data/models/response/user.dart';
 import '../../bloc/auth/auth_bloc.dart';
@@ -28,11 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    user = locator<LocalDBService>().getUserInfo();
-    if (user == null) {
-      BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
-      user = locator<LocalDBService>().getUserInfo();
-    }
+    BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
   }
 
   @override
@@ -44,7 +39,7 @@ class _HomePageState extends State<HomePage> {
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
-      drawer: MyDrawer(user: user),
+      drawer: const MyDrawer(),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -72,12 +67,19 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Column(
                   children: [
-                    Text(
-                      'Welcome${user != null ? ', ${user!.name}' : ''}!',
-                      style: theme.textTheme.headlineSmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    BlocBuilder<AuthBloc, AuthState>(
+                      builder: (context, state) {
+                        if (state is UserInfoLoaded) {
+                          return Text(
+                            'Welcome ${state.user.name}!',
+                            style: theme.textTheme.headlineSmall?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          );
+                        }
+                        return Container();
+                      },
                     ),
                     const SizedBox(height: 8),
                     Text(
