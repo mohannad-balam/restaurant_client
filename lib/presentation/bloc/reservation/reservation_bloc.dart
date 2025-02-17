@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
 import 'package:reservation_client/domain/entities/reservation/reservation_entity.dart';
@@ -9,7 +10,7 @@ import 'package:reservation_client/domain/usecases/reservation/delete_reservatio
 import 'package:reservation_client/domain/usecases/reservation/get_reservations_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/update_reservation_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
-import 'package:reservation_client/presentation/widgets/custom_snackbar.dart';
+import 'package:reservation_client/presentation/widgets/my_snackbar.dart';
 import '../../../core/utils/helpers/helpers.dart';
 import '../../../domain/usecases/reservation/create_reservation_usecase.dart';
 part 'reservation_event.dart';
@@ -28,7 +29,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         add(const GetReservationsEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), false);
+        mySnackBar(e.toString(), error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });
@@ -39,7 +40,7 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
             await locator<GetReservationsUsecase>().call();
         emit(ReservationsLoaded(reservations: reservations));
       } catch (e) {
-        mySnackBar(e.toString(), false);
+        mySnackBar(e.toString(), error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });
@@ -49,10 +50,11 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         buildContext.loaderOverlay.show();
         await locator<DeleteReservationUsecase>().call(params: event.id);
         buildContext.loaderOverlay.hide();
+        mySnackBar(Strings.successMessage, success: true);
         add(const GetReservationsEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), false);
+        mySnackBar(e.toString(), error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });
@@ -64,11 +66,11 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
             .call(params: event.reservationRequest);
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().maybePop();
-        mySnackBar("Updated Successfully!", true);
+        mySnackBar(Strings.successMessage, success: true);
         add(const GetReservationsEvent());
       } catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), false);
+        mySnackBar(e.toString(), error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });

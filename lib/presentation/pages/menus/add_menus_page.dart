@@ -11,7 +11,7 @@ import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
-import 'package:reservation_client/presentation/widgets/custom_snackbar.dart';
+import 'package:reservation_client/presentation/widgets/my_snackbar.dart';
 
 import '../../../core/common/widgets/custom_text_field.dart';
 
@@ -53,7 +53,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
         _priceController.text.isEmpty ||
         _selectedImage == null ||
         _selectedCategoryIds.isEmpty) {
-      mySnackBar("please fill the required fiedls", false);
+      mySnackBar(Strings.formValidation, error: true);
       return;
     }
 

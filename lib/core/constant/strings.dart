@@ -1,5 +1,6 @@
 class Strings {
-  static const String appName = "Diea Restaurant";
+  static const String appName = "Diea Restaurant Admin Dashboard";
+  static const String successMessage = "Done Successfully!";
   static const String userProfile = "User Profile";
   static const String categories = "Categories";
   static const String categoryMenu = "Categories";
@@ -32,8 +33,8 @@ class Strings {
   static const String reservationForm = "Reservation Form";
   static const String editReservation = "Edit Reservation";
   static const String all = "All";
-  static const String availabel = "Availabel";
-  static const String unAvailable = "Unavailabel";
+  static const String availabel = "Available";
+  static const String unAvailable = "Unavailable";
   static const String pending = "Pending";
   static String tel(String phone) => "tel:$phone";
   static String appPhone = "0920000000";

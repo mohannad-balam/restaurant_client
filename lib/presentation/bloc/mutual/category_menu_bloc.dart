@@ -4,7 +4,7 @@ import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 
 import '../../../core/services/injectables/locator.dart';
 import '../../../domain/usecases/categories/get_category_menu_usecase.dart';
-import '../../widgets/custom_snackbar.dart';
+import '../../widgets/my_snackbar.dart';
 
 part 'category_menu_event.dart';
 part 'category_menu_state.dart';
@@ -18,7 +18,7 @@ class CategoryMenuBloc extends Bloc<CategoryMenuEvent, CategoryMenuState> {
             await locator<GetCategoryMenuUsecase>().call(params: event.id);
         emit(CategoryMenuLoaded(categoryMenu: categoryMenu));
       } catch (e) {
-        mySnackBar(e.toString(), false);
+        mySnackBar(e.toString(), error: true);
         emit(CategoryMenuError(message: e.toString()));
       }
     });

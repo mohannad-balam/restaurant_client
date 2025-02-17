@@ -44,14 +44,6 @@ dependencies:
   google_fonts: 
   # shared_preferences: 
   encrypt_shared_preferences: 
-  pinput: 
-  device_info_plus: 
-  qr_flutter: 
-  local_auth: 
-  shimmer: 
-  animated_bottom_navigation_bar: 
-  infinite_scroll_pagination: 
-  uuid: 
   loader_overlay: 
   syncfusion_flutter_datagrid: 
   expandable: 
@@ -76,6 +68,7 @@ dependencies:
   lottie:
   image_picker:
   logger:
+  icon_animated:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

@@ -10,7 +10,7 @@ import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
-import 'package:reservation_client/presentation/widgets/custom_snackbar.dart';
+import 'package:reservation_client/presentation/widgets/my_snackbar.dart';
 
 import '../../../core/common/widgets/custom_text_field.dart';
 import '../../../core/common/widgets/main_button.dart';
@@ -63,7 +63,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
         _priceController.text.isEmpty ||
         _selectedImage == null ||
         _selectedCategoryIds.isEmpty) {
-      mySnackBar(Strings.formValidation, false);
+      mySnackBar(Strings.formValidation, error: true);
       return;
     }
 
