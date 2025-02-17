@@ -1,3 +1,4 @@
+import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
 import 'package:reservation_client/data/sources/categories/categories_service.dart';
 import 'package:reservation_client/data/sources/categories/i_categories_service.dart';
@@ -61,6 +62,7 @@ Future<void> setupLocator() async {
 Future<void> _setupServives() async {
   locator.registerSingleton(AppRouter());
   locator.registerSingleton(Logger(printer: CustomPrinter()));
+  locator.registerLazySingleton(() => ImagePicker());
 }
 
 Future<void> _setupHttpService() async {
@@ -76,57 +78,66 @@ Future<void> _setupSharedPreferences() async {
 }
 
 Future<void> _setupSources() async {
-  locator.registerSingleton<IAuthService>(AuthService());
-  locator.registerSingleton<ICategoriesService>(CategoriesService());
-  locator.registerSingleton<IMenusService>(MenusService());
-  locator.registerSingleton<IReservationService>(ReservationService());
-  locator.registerSingleton<ITableService>(TableService());
+  locator.registerLazySingleton<IAuthService>(() => AuthService());
+  locator.registerLazySingleton<ICategoriesService>(() => CategoriesService());
+  locator.registerLazySingleton<IMenusService>(() => MenusService());
+  locator
+      .registerLazySingleton<IReservationService>(() => ReservationService());
+  locator.registerLazySingleton<ITableService>(() => TableService());
 }
 
 Future<void> _setupRepositories() async {
-  locator.registerSingleton<IAuthRepository>(AuthRepository());
-  locator.registerSingleton<ICategoriesRepository>(CategoriesRepository());
-  locator.registerSingleton<IMenusRepository>(MenusRepository());
-  locator.registerSingleton<IReservationRepository>(ReservationRepository());
-  locator.registerSingleton<ITableRepository>(TableRepository());
+  locator.registerLazySingleton<IAuthRepository>(() => AuthRepository());
+  locator.registerLazySingleton<ICategoriesRepository>(
+      () => CategoriesRepository());
+  locator.registerLazySingleton<IMenusRepository>(() => MenusRepository());
+  locator.registerLazySingleton<IReservationRepository>(
+      () => ReservationRepository());
+  locator.registerLazySingleton<ITableRepository>(() => TableRepository());
 }
 
 Future<void> _setupUsecases() async {
-  locator.registerSingleton<LoginUsecase>(LoginUsecase());
+  locator.registerLazySingleton<LoginUsecase>(() => LoginUsecase());
 
-  locator.registerSingleton<GetCategoriesUsecase>(GetCategoriesUsecase());
+  locator.registerLazySingleton<GetCategoriesUsecase>(
+      () => GetCategoriesUsecase());
 
-  locator.registerSingleton<GetMenusUsecase>(GetMenusUsecase());
+  locator.registerLazySingleton<GetMenusUsecase>(() => GetMenusUsecase());
 
-  locator.registerSingleton<GetCategoryMenuUsecase>(GetCategoryMenuUsecase());
+  locator.registerLazySingleton<GetCategoryMenuUsecase>(
+      () => GetCategoryMenuUsecase());
 
-  locator
-      .registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
+  locator.registerLazySingleton<CreateReservationUsecase>(
+      () => CreateReservationUsecase());
 
-  locator.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
+  locator.registerLazySingleton<GetUserInfoUsecase>(() => GetUserInfoUsecase());
 
-  locator.registerSingleton<GetAvailableTablesUsecase>(
-      GetAvailableTablesUsecase());
+  locator.registerLazySingleton<GetAvailableTablesUsecase>(
+      () => GetAvailableTablesUsecase());
 
   ///categories
-  locator.registerSingleton<CreateCategoryUsecase>(CreateCategoryUsecase());
-  locator.registerSingleton<DeleteCategoryUsecase>(DeleteCategoryUsecase());
-  locator.registerSingleton<UpdateCategoryUsecase>(UpdateCategoryUsecase());
+  locator.registerLazySingleton<CreateCategoryUsecase>(
+      () => CreateCategoryUsecase());
+  locator.registerLazySingleton<DeleteCategoryUsecase>(
+      () => DeleteCategoryUsecase());
+  locator.registerLazySingleton<UpdateCategoryUsecase>(
+      () => UpdateCategoryUsecase());
 
   ///tables
-  locator.registerSingleton<AddTableUsecase>(AddTableUsecase());
-  locator.registerSingleton<DeleteTableUsecase>(DeleteTableUsecase());
-  locator.registerSingleton<UpdateTableUsecase>(UpdateTableUsecase());
+  locator.registerLazySingleton<AddTableUsecase>(() => AddTableUsecase());
+  locator.registerLazySingleton<DeleteTableUsecase>(() => DeleteTableUsecase());
+  locator.registerLazySingleton<UpdateTableUsecase>(() => UpdateTableUsecase());
 
   ///tables
-  locator.registerSingleton<GetReservationsUsecase>(GetReservationsUsecase());
-  locator
-      .registerSingleton<DeleteReservationUsecase>(DeleteReservationUsecase());
-  locator
-      .registerSingleton<UpdateReservationUsecase>(UpdateReservationUsecase());
+  locator.registerLazySingleton<GetReservationsUsecase>(
+      () => GetReservationsUsecase());
+  locator.registerLazySingleton<DeleteReservationUsecase>(
+      () => DeleteReservationUsecase());
+  locator.registerLazySingleton<UpdateReservationUsecase>(
+      () => UpdateReservationUsecase());
 
   ///menus
-  locator.registerSingleton<CreateMenuUsecase>(CreateMenuUsecase());
-  locator.registerSingleton<UpdateMenuUsecase>(UpdateMenuUsecase());
-  locator.registerSingleton<DeleteMenuUsecase>(DeleteMenuUsecase());
+  locator.registerLazySingleton<CreateMenuUsecase>(() => CreateMenuUsecase());
+  locator.registerLazySingleton<UpdateMenuUsecase>(() => UpdateMenuUsecase());
+  locator.registerLazySingleton<DeleteMenuUsecase>(() => DeleteMenuUsecase());
 }
