@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:reservation_client/core/common/widgets/square_card.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
@@ -24,12 +25,11 @@ class StartAppPage extends StatelessWidget {
           children: [
             // App Title
             Text(
-              'Welcome to Restaurant Reservation',
+              Strings.welcomeTo,
               style: theme.textTheme.titleLarge?.copyWith(
-                color: theme.colorScheme.onPrimary,
-                fontWeight: FontWeight.bold,
-                fontSize: 40
-              ),
+                  color: theme.colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 40),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 40.0),
@@ -54,7 +54,7 @@ class StartAppPage extends StatelessWidget {
                   textColor: theme.colorScheme.primary,
                   color: theme.colorScheme.secondary,
                   onTap: () {
-                    HelpUtils.tryLaunch(url: "tel:0900000000");
+                    HelpUtils.tryLaunch(url: Strings.tel(Strings.appPhone));
                   },
                 ),
               ],
@@ -74,6 +74,4 @@ class StartAppPage extends StatelessWidget {
       ),
     );
   }
-
-  
 }

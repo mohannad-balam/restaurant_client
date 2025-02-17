@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/core/common/widgets/no_data.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
@@ -28,7 +29,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Reservations")),
+      appBar: AppBar(title: const Text(Strings.reservations)),
       body: BlocBuilder<ReservationBloc, ReservationState>(
         builder: (context, state) {
           if (state is ReservationsLoading) {
@@ -46,7 +47,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
               },
             );
           } else if (state is ReservationsError) {
-            return Center(child: Text("Error: ${state.message}"));
+            return Center(child: Text(state.message));
           }
           return const SizedBox();
         },

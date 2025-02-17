@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
+import 'package:reservation_client/presentation/widgets/custom_snackbar.dart';
 
 import '../../../core/common/widgets/custom_text_field.dart';
 import '../../../core/common/widgets/main_button.dart';
@@ -61,16 +63,13 @@ class _EditMenuPageState extends State<EditMenuPage> {
         _priceController.text.isEmpty ||
         _selectedImage == null ||
         _selectedCategoryIds.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text("⚠️ Please fill all fields and select categories")),
-      );
+      mySnackBar(Strings.formValidation, false);
       return;
     }
 
     FormData formData = FormData.fromMap({
       "id": widget.menuEntity.id,
-      "_method": "PUT",
+      "_method": Strings.put,
       "name": _nameController.text,
       "description": _descriptionController.text,
       'price': double.parse(_priceController.text),
@@ -92,7 +91,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Menu")),
+      appBar: AppBar(title: const Text(Strings.editMenu)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -128,10 +127,10 @@ class _EditMenuPageState extends State<EditMenuPage> {
             const SizedBox(height: 20),
             _selectedImage != null
                 ? Image.file(_selectedImage!, height: 100)
-                : const Text("No image selected"),
+                : const Text(Strings.noImageSelected),
             MainButton(
               onPressed: _pickImage,
-              title: 'Pick Image',
+              title: Strings.pickImage,
               borderStyle: true,
             ),
             const SizedBox(height: 20),
@@ -191,7 +190,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
                     ],
                   );
                 } else {
-                  return const Text("Failed to load categories");
+                  return const Text(Strings.loadFail);
                 }
               },
             ),
@@ -199,7 +198,7 @@ class _EditMenuPageState extends State<EditMenuPage> {
             const SizedBox(height: 20),
             MainButton(
               onPressed: _submitMenu,
-              title: 'Update Menu',
+              title: Strings.update,
               borderStyle: false,
             ),
           ],

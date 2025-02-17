@@ -1,8 +1,8 @@
 import 'package:fk_user_agent/fk_user_agent.dart';
-import 'package:reservation_client/core/services/logs/log_interceptor.dart';
+import 'package:reservation_client/core/services/interceptors/logs/log_interceptor.dart';
 import '../../../core/enums/http_methods.dart';
 import '../../../core/enums/platforms.dart';
-import '../auth/app_interceptor.dart';
+import '../interceptors/auth/app_interceptor.dart';
 import '../../utils/helpers/helpers.dart';
 import 'package:dio/dio.dart';
 

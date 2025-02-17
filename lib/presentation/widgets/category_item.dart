@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
 
@@ -66,12 +67,12 @@ class _CategoryItemState extends State<CategoryItem> {
                 right: 10,
                 child: PopupMenuButton<String>(
                   onSelected: (value) {
-                    if (value == 'edit') {
+                    if (value == Strings.edit) {
                       locator<AppRouter>().push(
                         EditCategoryPageRoute(
                             categoryEntity: widget.categoryEntity),
                       );
-                    } else if (value == 'delete') {
+                    } else if (value == Strings.delete) {
                       BlocProvider.of<CategoriesBloc>(context).add(
                           DeleteCategoryEvent(
                               id: widget.categoryEntity.id.toString()));
@@ -79,12 +80,12 @@ class _CategoryItemState extends State<CategoryItem> {
                   },
                   itemBuilder: (context) => [
                     const PopupMenuItem(
-                      value: 'edit',
-                      child: Text('Edit'),
+                      value: Strings.edit,
+                      child: Text(Strings.edit),
                     ),
                     const PopupMenuItem(
-                      value: 'delete',
-                      child: Text('Delete'),
+                      value: Strings.delete,
+                      child: Text(Strings.delete),
                     ),
                   ],
                   icon: const Icon(

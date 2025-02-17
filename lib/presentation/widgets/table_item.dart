@@ -7,6 +7,8 @@ import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
+import '../../core/constant/strings.dart';
+
 class TableItem extends StatelessWidget {
   final TableEntity tableEntity;
 
@@ -92,32 +94,32 @@ class TableItem extends StatelessWidget {
             const SizedBox(width: 10),
             PopupMenuButton<String>(
               onSelected: (value) {
-                if (value == 'edit') {
+                if (value == Strings.edit) {
                   locator<AppRouter>()
                       .push(EditTablePageRoute(tableEntity: tableEntity));
-                } else if (value == 'delete') {
+                } else if (value == Strings.delete) {
                   BlocProvider.of<TablesBloc>(context)
                       .add(DeleteTableEvent(id: tableEntity.id.toString()));
                 }
               },
               itemBuilder: (BuildContext context) => [
                 const PopupMenuItem(
-                  value: 'edit',
+                  value: Strings.edit,
                   child: Row(
                     children: [
                       Icon(Icons.edit, color: Colors.blue),
                       SizedBox(width: 8),
-                      Text('Edit'),
+                      Text(Strings.edit),
                     ],
                   ),
                 ),
                 const PopupMenuItem(
-                  value: 'delete',
+                  value: Strings.delete,
                   child: Row(
                     children: [
                       Icon(Icons.delete, color: Colors.red),
                       SizedBox(width: 8),
-                      Text('Delete'),
+                      Text(Strings.delete),
                     ],
                   ),
                 ),

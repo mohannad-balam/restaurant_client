@@ -1,1 +1,50 @@
-class Strings {}
+class Strings {
+  static const String appName = "Diea Restaurant";
+  static const String userProfile = "User Profile";
+  static const String categories = "Categories";
+  static const String categoryMenu = "Categories";
+  static const String createMenu = "Create Menu";
+  static const String noImageSelected = "No image selected";
+  static const String addCategory = "Add Category";
+  static const String loadFail = "Failed To Load";
+  static const String formValidation =
+      "⚠️ Please fill all fields and select categories";
+  static const String put = "PUT";
+  static const String editMenu = "Edit Menu";
+  static const String menus = "Menu";
+  static const String reservations = "Reservations";
+  static const String addTable = "Create Table";
+  static const String tables = "Tables";
+  static const String editTable = "Edit Table";
+  static const String edit = "Edit";
+  static const String delete = "Delete";
+  static const String update = "Update";
+  static const String create = "Create";
+  static const String guests = "guests";
+  static const String signIn = "SignIn";
+  static const String signUp = "Register";
+  static const String signOut = "Sign Out";
+  static const String pickImage = "Pick Image";
+  static const String backHome = "Back To Home Page";
+  static const String submit = "Submit Form";
+  static const String editCategory = "Edit Category";
+  static const String home = "Home";
+  static const String reservationForm = "Reservation Form";
+  static const String editReservation = "Edit Reservation";
+  static const String all = "All";
+  static const String availabel = "Availabel";
+  static const String unAvailable = "Unavailabel";
+  static const String pending = "Pending";
+  static String tel(String phone) => "tel:$phone";
+  static String appPhone = "0920000000";
+  static String status = "Status";
+  static String location = "Location";
+  static String front = "front";
+  static String inside = "inside";
+  static String outside = "outside";
+  static String welcome = "Welcome!";
+  static String welcomeBack = "Welcome Back!";
+  static String welcomeTo = "Welcome to $appName!";
+  static String appMessage =
+      "Manage your reservations, explore menus, and more!";
+}

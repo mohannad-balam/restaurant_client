@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/data/models/request/tables/create_table_request.dart';
 import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
 
@@ -26,7 +27,7 @@ class _AddTablePageState extends State<AddTablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Table")),
+      appBar: AppBar(title: const Text(Strings.addTable)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -55,8 +56,12 @@ class _AddTablePageState extends State<AddTablePage> {
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: _selectedLocation,
-                decoration: const InputDecoration(labelText: "Location"),
-                items: ["front", "inside", "outside"]
+                decoration: InputDecoration(labelText: Strings.location),
+                items: [
+                  Strings.front,
+                  Strings.inside,
+                  Strings.outside,
+                ]
                     .map(
                         (loc) => DropdownMenuItem(value: loc, child: Text(loc)))
                     .toList(),
@@ -69,8 +74,12 @@ class _AddTablePageState extends State<AddTablePage> {
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: _selectedStatus,
-                decoration: const InputDecoration(labelText: "Status"),
-                items: ["pending", "available", "unavailable"]
+                decoration: InputDecoration(labelText: Strings.status),
+                items: [
+                  Strings.pending.toLowerCase(),
+                  Strings.availabel.toLowerCase(),
+                  Strings.unAvailable.toLowerCase(),
+                ]
                     .map((status) =>
                         DropdownMenuItem(value: status, child: Text(status)))
                     .toList(),
@@ -85,7 +94,6 @@ class _AddTablePageState extends State<AddTablePage> {
                 width: double.infinity,
                 child: MainButton(
                   onPressed: () {
-                    debugPrint('add table');
                     BlocProvider.of<TablesBloc>(context).add(CreateTableEvent(
                         request: CreateTableRequest(
                       name: _nameController.text,
@@ -94,7 +102,7 @@ class _AddTablePageState extends State<AddTablePage> {
                       location: _selectedLocation,
                     )));
                   },
-                  title: 'Add Table',
+                  title: Strings.create,
                   borderStyle: false,
                 ),
               ),

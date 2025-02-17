@@ -6,6 +6,7 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'dart:io';
 
@@ -60,7 +61,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Category'),
+        title: const Text(Strings.addCategory),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -93,13 +94,13 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               Row(
                 children: [
                   _image == null
-                      ? const Text('No image selected')
+                      ? const Text(Strings.noImageSelected)
                       : Image.file(_image!,
                           width: 100, height: 100, fit: BoxFit.cover),
                   const SizedBox(width: 10),
                   MainButton(
                     onPressed: _pickImage,
-                    title: 'Pick Image',
+                    title: Strings.pickImage,
                     borderStyle: true,
                   ),
                 ],
@@ -108,7 +109,7 @@ class _AddCategoryPageState extends State<AddCategoryPage> {
               Center(
                 child: MainButton(
                   onPressed: _submitForm,
-                  title: 'Add Category',
+                  title: Strings.create,
                   borderStyle: false,
                 ),
               ),

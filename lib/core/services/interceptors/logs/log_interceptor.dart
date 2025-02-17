@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import '../../../core/utils/helpers/helpers.dart';
-import '../injectables/locator.dart';
+import '../../../utils/helpers/helpers.dart';
+import '../../injectables/locator.dart';
 import 'package:logger/logger.dart';
 
 class LoggerInterceptor extends Interceptor {

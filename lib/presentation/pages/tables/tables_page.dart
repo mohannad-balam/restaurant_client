@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
@@ -18,7 +19,7 @@ class TablesPage extends StatefulWidget {
 }
 
 class _TablesPageState extends State<TablesPage> {
-  String selectedStatus = "All"; // Default selected filter
+  String selectedStatus = Strings.all; // Default selected filter
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _TablesPageState extends State<TablesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Tables")),
+      appBar: AppBar(title: const Text(Strings.tables)),
       body: Column(
         children: [
           // Scrollable Filter Chips
@@ -40,10 +41,10 @@ class _TablesPageState extends State<TablesPage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: Row(
                 children: [
-                  _buildChip("All"),
-                  _buildChip("Available"),
-                  _buildChip("Pending"),
-                  _buildChip("Unavailable"),
+                  _buildChip(Strings.all),
+                  _buildChip(Strings.availabel),
+                  _buildChip(Strings.pending),
+                  _buildChip(Strings.unAvailable),
                 ],
               ),
             ),
@@ -58,7 +59,7 @@ class _TablesPageState extends State<TablesPage> {
                 } else if (state is TablesLoaded) {
                   // Filter tables based on selected status
                   final filteredTables = state.tables.where((table) {
-                    if (selectedStatus == "All") return true;
+                    if (selectedStatus == Strings.all) return true;
                     return table.status?.toLowerCase() ==
                         selectedStatus.toLowerCase();
                   }).toList();

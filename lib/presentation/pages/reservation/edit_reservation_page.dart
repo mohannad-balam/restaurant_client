@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/constant/asset_files.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
 import 'package:reservation_client/domain/entities/reservation/reservation_entity.dart';
 import 'package:reservation_client/domain/entities/table/table_entity.dart';
@@ -90,7 +91,7 @@ class _EditReservationPageState extends State<EditReservationPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text('Edit Reservation')),
+      appBar: AppBar(title: const Text(Strings.editReservation)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -176,7 +177,7 @@ class _EditReservationPageState extends State<EditReservationPage> {
                 SizedBox(
                   width: double.infinity,
                   child: MainButton(
-                    title: 'Update Reservation',
+                    title: Strings.submit,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         BlocProvider.of<ReservationBloc>(context).add(

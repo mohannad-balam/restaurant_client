@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
@@ -78,7 +79,9 @@ class _AddMenuPageState extends State<AddMenuPage> {
   Widget build(BuildContext context) {
     final currentTheme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: const Text("Add Menu")),
+      appBar: AppBar(
+        title: const Text(Strings.createMenu),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -114,10 +117,10 @@ class _AddMenuPageState extends State<AddMenuPage> {
             const SizedBox(height: 20),
             _selectedImage != null
                 ? Image.file(_selectedImage!, height: 100)
-                : const Text("No image selected"),
+                : const Text(Strings.noImageSelected),
             MainButton(
               onPressed: _pickImage,
-              title: 'Pick Image',
+              title: Strings.pickImage,
               borderStyle: true,
             ),
             const SizedBox(height: 20),
@@ -177,7 +180,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
                     ],
                   );
                 } else {
-                  return const Text("Failed to load categories");
+                  return const Text(Strings.loadFail);
                 }
               },
             ),
@@ -185,7 +188,7 @@ class _AddMenuPageState extends State<AddMenuPage> {
             const SizedBox(height: 20),
             MainButton(
               onPressed: _submitMenu,
-              title: 'Add Menu',
+              title: Strings.create,
               borderStyle: false,
             ),
           ],

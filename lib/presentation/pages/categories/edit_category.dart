@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 import 'dart:io';
@@ -71,7 +72,7 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Category'),
+        title: const Text(Strings.editCategory),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -103,13 +104,13 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
               Row(
                 children: [
                   _image == null
-                      ? const Text('No image selected')
+                      ? const Text(Strings.noImageSelected)
                       : Image.file(_image!,
                           width: 100, height: 100, fit: BoxFit.cover),
                   const SizedBox(width: 10),
                   MainButton(
                     onPressed: _pickImage,
-                    title: 'Pick Image',
+                    title: Strings.pickImage,
                     borderStyle: true,
                   ),
                 ],
@@ -118,7 +119,7 @@ class _EditCategoryPageState extends State<EditCategoryPage> {
               Center(
                 child: MainButton(
                   onPressed: _submitForm,
-                  title: 'Update Category',
+                  title: Strings.update,
                   borderStyle: false,
                 ),
               ),

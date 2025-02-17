@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/domain/entities/menu/menu_entity.dart';
 import 'package:reservation_client/presentation/bloc/menus/menus_bloc.dart';
@@ -60,10 +61,10 @@ class MenuItem extends StatelessWidget {
                       ),
                       PopupMenuButton<String>(
                         onSelected: (value) {
-                          if (value == 'edit') {
+                          if (value == Strings.edit) {
                             locator<AppRouter>().push(
                                 EditMenuPageRoute(menuEntity: menuEntity));
-                          } else if (value == 'delete') {
+                          } else if (value == Strings.delete) {
                             BlocProvider.of<MenusBloc>(context).add(
                               DeleteMenuEvent(
                                 id: menuEntity.id.toString(),
@@ -73,22 +74,22 @@ class MenuItem extends StatelessWidget {
                         },
                         itemBuilder: (context) => [
                           const PopupMenuItem(
-                            value: 'edit',
+                            value: Strings.edit,
                             child: Row(
                               children: [
                                 Icon(Icons.edit, color: Colors.teal),
                                 SizedBox(width: 10),
-                                Text("Edit"),
+                                Text(Strings.edit),
                               ],
                             ),
                           ),
                           const PopupMenuItem(
-                            value: 'delete',
+                            value: Strings.delete,
                             child: Row(
                               children: [
                                 Icon(Icons.delete, color: Colors.red),
                                 SizedBox(width: 10),
-                                Text("Delete"),
+                                Text(Strings.delete),
                               ],
                             ),
                           ),

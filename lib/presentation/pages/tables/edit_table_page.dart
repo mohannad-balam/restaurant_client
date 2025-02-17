@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/data/models/request/tables/create_table_request.dart';
 import 'package:reservation_client/domain/entities/table/table_entity.dart';
 import 'package:reservation_client/presentation/bloc/tables/tables_bloc.dart';
@@ -36,7 +37,7 @@ class _EditTablePageState extends State<EditTablePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Edit Table")),
+      appBar: AppBar(title: const Text(Strings.editTable)),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -65,8 +66,12 @@ class _EditTablePageState extends State<EditTablePage> {
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: _selectedLocation,
-                decoration: const InputDecoration(labelText: "Location"),
-                items: ["front", "inside", "outside"]
+                decoration: InputDecoration(labelText: Strings.location),
+                items: [
+                  Strings.front,
+                  Strings.inside,
+                  Strings.outside,
+                ]
                     .map(
                         (loc) => DropdownMenuItem(value: loc, child: Text(loc)))
                     .toList(),
@@ -79,8 +84,12 @@ class _EditTablePageState extends State<EditTablePage> {
               const SizedBox(height: 10),
               DropdownButtonFormField<String>(
                 value: _selectedStatus,
-                decoration: const InputDecoration(labelText: "Status"),
-                items: ["pending", "available", "unavailable"]
+                decoration: InputDecoration(labelText: Strings.status),
+                items: [
+                  Strings.pending.toLowerCase(),
+                  Strings.availabel.toLowerCase(),
+                  Strings.unAvailable.toLowerCase(),
+                ]
                     .map((status) =>
                         DropdownMenuItem(value: status, child: Text(status)))
                     .toList(),
@@ -104,7 +113,7 @@ class _EditTablePageState extends State<EditTablePage> {
                       location: _selectedLocation,
                     )));
                   },
-                  child: const Text("Update"),
+                  child: const Text(Strings.update),
                 ),
               ),
             ],

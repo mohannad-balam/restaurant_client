@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/core/common/widgets/square_card.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
-import 'package:reservation_client/data/models/response/user.dart';
 import 'package:reservation_client/presentation/pages/common/my_drawer.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
-
-import '../../../core/services/localDB/local_db_service.dart';
 import '../../bloc/auth/auth_bloc.dart';
 
 @RoutePage()
@@ -21,16 +19,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late User? user;
   @override
   void initState() {
-    user = locator<LocalDBService>().getUserInfo();
-    if (user == null) {
-      BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
-      user = locator<LocalDBService>().getUserInfo();
-    }
-
     super.initState();
+    BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
   }
 
   final _advancedDrawerController = AdvancedDrawerController();
@@ -43,12 +35,10 @@ class _HomePageState extends State<HomePage> {
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
-      drawer: MyDrawer(
-        user: user,
-      ),
+      drawer: const MyDrawer(),
       child: Scaffold(
         appBar: AppBar(
-            title: const Text('Home'),
+            title: const Text(Strings.home),
             centerTitle: true,
             leading: IconButton(
                 onPressed: () {
@@ -61,17 +51,24 @@ class _HomePageState extends State<HomePage> {
             children: [
               const SizedBox(height: 40),
               // Welcome Message
-              Text(
-                'Welcome Admin!',
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.primary,
-                ),
-                textAlign: TextAlign.center,
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  if (state is UserInfoLoaded) {
+                    return Text(
+                      '${Strings.welcome} ${state.user.name}',
+                      style: theme.textTheme.headlineSmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: theme.colorScheme.primary,
+                      ),
+                      textAlign: TextAlign.center,
+                    );
+                  }
+                  return Container();
+                },
               ),
               const SizedBox(height: 8.0),
               Text(
-                'Manage your reservations, explore menus, and more!',
+                Strings.appMessage,
                 style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
                 textAlign: TextAlign.center,
               ),
@@ -88,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                     SquareCard(
                       icon: Icons.category,
                       iconColor: theme.colorScheme.primary,
-                      label: 'Categories',
+                      label: Strings.categories,
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {
@@ -99,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                     SquareCard(
                       icon: Icons.menu_book,
                       iconColor: theme.colorScheme.primary,
-                      label: 'Menu',
+                      label: Strings.menus,
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {
@@ -110,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                     SquareCard(
                       icon: Icons.book,
                       iconColor: theme.colorScheme.primary,
-                      label: 'Reservations',
+                      label: Strings.reservations,
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {
@@ -122,7 +119,7 @@ class _HomePageState extends State<HomePage> {
                     SquareCard(
                       icon: Icons.table_bar,
                       iconColor: theme.colorScheme.primary,
-                      label: 'Tables',
+                      label: Strings.tables,
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {

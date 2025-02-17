@@ -6,6 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:reservation_client/core/common/widgets/custom_text_field.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/constant/asset_files.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/utils/helpers/helpers.dart';
 import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
 import 'package:reservation_client/domain/entities/table/table_entity.dart';
@@ -77,7 +78,7 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Reservation Form'),
+        title: const Text(Strings.reservationForm),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -191,7 +192,7 @@ class _CreateReservationPageState extends State<CreateReservationPage> {
                 SizedBox(
                     width: double.infinity,
                     child: MainButton(
-                        title: 'Submit Reservation',
+                        title: Strings.submit,
                         onPressed: () {
                           BlocProvider.of<ReservationBloc>(context)
                               .add(CreateReservationEvent(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/auth/login_request.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
@@ -26,7 +27,7 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.secondary,
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text(Strings.signIn),
         centerTitle: true,
         backgroundColor: theme.colorScheme.secondary,
       ),
@@ -40,7 +41,7 @@ class LoginPage extends StatelessWidget {
               children: [
                 // Header
                 Text(
-                  'Welcome Back!',
+                  Strings.welcomeBack,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.primary,
@@ -50,7 +51,8 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 8.0),
                 Text(
                   'Log in to continue',
-                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                  style:
+                      theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24.0),
@@ -84,7 +86,7 @@ class LoginPage extends StatelessWidget {
 
                 // Login Button
                 MainButton(
-                  title: 'Login',
+                  title: Strings.signIn,
                   onPressed: () {
                     if (_formKey.currentState?.validate() ?? false) {
                       BlocProvider.of<AuthBloc>(context).add(

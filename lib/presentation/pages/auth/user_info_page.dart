@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/data/models/response/user.dart';
@@ -36,7 +37,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       backgroundColor: theme.colorScheme.secondary,
       appBar: AppBar(
-        title: const Text("User Profile"),
+        title: const Text(Strings.userProfile),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -84,7 +85,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
                         ),
                         SizedBox(height: screenHeight * 0.03),
                         MainButton(
-                            title: 'Logout',
+                            title: Strings.signOut,
                             onPressed: () {
                               BlocProvider.of<AuthBloc>(context)
                                   .add(LogoutEvent());

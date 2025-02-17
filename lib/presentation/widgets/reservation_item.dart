@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/presentation/bloc/reservation/reservation_bloc.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
@@ -32,20 +33,20 @@ class ReservationItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Email: ${reservation.email}",
+              reservation.email.toString(),
               style: currentTheme.textTheme.bodyLarge,
             ),
-            Text("Phone: ${reservation.telNumber}",
+            Text(reservation.telNumber.toString(),
                 style: currentTheme.textTheme.bodyLarge),
-            Text("Date: ${reservation.resDate?.split('T')[0]}",
+            Text(reservation.resDate!.split('T')[0],
                 style: currentTheme.textTheme.bodyLarge),
             Text(
-              "Guests: ${reservation.guestNumber}",
+              "${reservation.guestNumber} ${Strings.guests}",
               style: currentTheme.textTheme.bodyLarge!
                   .copyWith(color: AppColors.mainColor),
             ),
             Text(
-              "Table: ${reservation.table}",
+              reservation.table.toString(),
               style: currentTheme.textTheme.bodyLarge!
                   .copyWith(color: AppColors.mainColor),
             ),
@@ -60,27 +61,27 @@ class ReservationItem extends StatelessWidget {
         ),
         trailing: PopupMenuButton<String>(
           onSelected: (value) {
-            if (value == 'edit') {
+            if (value == Strings.edit) {
               locator<AppRouter>()
                   .push(EditReservationPageRoute(reservation: reservation));
-            } else if (value == 'delete') {
+            } else if (value == Strings.delete) {
               BlocProvider.of<ReservationBloc>(context)
                   .add(DeleteReservationEvent(id: reservation.id.toString()));
             }
           },
           itemBuilder: (context) => [
             const PopupMenuItem(
-              value: 'edit',
+              value: Strings.edit,
               child: ListTile(
                 leading: Icon(Icons.edit, color: Colors.blue),
-                title: Text("Edit"),
+                title: Text(Strings.edit),
               ),
             ),
             const PopupMenuItem(
-              value: 'delete',
+              value: Strings.delete,
               child: ListTile(
                 leading: Icon(Icons.delete, color: Colors.red),
-                title: Text("Delete"),
+                title: Text(Strings.delete),
               ),
             ),
           ],

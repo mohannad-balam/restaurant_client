@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reservation_client/core/common/widgets/no_data.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/core/theme/app_colors.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
@@ -28,7 +29,7 @@ class _MenusPageState extends State<MenusPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Menus"),
+        title: const Text(Strings.menus),
       ),
       body: BlocBuilder<MenusBloc, MenusState>(
         builder: (context, state) {

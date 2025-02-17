@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/constant/asset_files.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
@@ -50,7 +51,7 @@ class ConfirmedPage extends StatelessWidget {
               const SizedBox(height: 32),
               // Back to Home button
               MainButton(
-                  title: 'Back To Home',
+                  title: Strings.backHome,
                   onPressed: () {
                     locator<AppRouter>().replaceAll([const HomePageRoute()]);
                   },

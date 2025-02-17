@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
+import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/data/models/request/auth/register_request.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
@@ -27,7 +28,7 @@ class RegisterPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.secondary,
       appBar: AppBar(
-        title: const Text('Registeration'),
+        title: const Text(Strings.signUp),
         centerTitle: true,
         backgroundColor: theme.colorScheme.secondary,
       ),
@@ -41,7 +42,7 @@ class RegisterPage extends StatelessWidget {
               children: [
                 // Header
                 Text(
-                  'Welcome!',
+                  Strings.welcome,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: theme.colorScheme.primary,
@@ -66,7 +67,7 @@ class RegisterPage extends StatelessWidget {
                     FormBuilderValidators.maxLength(20)
                   ]),
                   icon: Icons.person,
-                  keyboardType:  TextInputType.name,
+                  keyboardType: TextInputType.name,
                 ),
                 const SizedBox(height: 16.0),
 
@@ -92,14 +93,14 @@ class RegisterPage extends StatelessWidget {
                     FormBuilderValidators.maxLength(20),
                   ]),
                   icon: Icons.lock,
-                  keyboardType:  TextInputType.visiblePassword,
+                  keyboardType: TextInputType.visiblePassword,
                   isPassword: true,
                 ),
                 const SizedBox(height: 24.0),
 
                 // Register Button
                 MainButton(
-                  title: 'Register',
+                  title: Strings.signUp,
                   onPressed: () {
                     if (_formKey.currentState?.validate() ?? false) {
                       BlocProvider.of<AuthBloc>(context).add(
