@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,9 +40,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         buildContext.loaderOverlay.hide();
         mySnackBar(Strings.successMessage, success: true);
         locator<AppRouter>().replace(const HomePageRoute());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         rethrow;
       }
     });
@@ -56,8 +57,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await mySnackBar(Strings.successMessage, success: true);
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().replaceAll([const StartAppPageRoute()]);
-      } catch (e) {
-        mySnackBar(e.toString(), error: true);
+      } on DioException catch (e) {
+        mySnackBar(e.response?.data, error: true);
         buildContext.loaderOverlay.hide();
         rethrow;
       }
@@ -72,9 +73,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await locator<LocalDBService>().saveToDisk(User.key(), user.toJson());
         emit(UserInfoLoaded(user: user));
         buildContext.loaderOverlay.hide();
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        emit(AuthError(message: e.toString()));
+        emit(AuthError(message: e.response?.data));
       }
     });
   }

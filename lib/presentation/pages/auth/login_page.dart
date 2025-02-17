@@ -4,13 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:reservation_client/core/common/widgets/main_button.dart';
 import 'package:reservation_client/core/constant/strings.dart';
-import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/auth/login_request.dart';
-import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 import '../../../core/common/widgets/custom_text_field.dart';
 import '../../bloc/auth/auth_bloc.dart';
-import '../../router/rourter.dart';
 
 @RoutePage()
 class LoginPage extends StatelessWidget {
@@ -117,30 +114,6 @@ class LoginPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 24.0),
-
-                // Register Navigation Button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Don't have an account?",
-                      style: theme.textTheme.bodyMedium,
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        locator<AppRouter>().replace(RegisterPageRoute());
-                      },
-                      child: Text(
-                        'Register',
-                        style: theme.textTheme.bodyMedium?.copyWith(
-                          color: theme.colorScheme.primary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),

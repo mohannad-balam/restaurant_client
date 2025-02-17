@@ -40,9 +40,9 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
         locator<AppRouter>().maybePop();
         mySnackBar(Strings.successMessage, success: true);
         add(GetMenusEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         context.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(MenusError(message: e.toString()));
       }
     });
@@ -56,9 +56,9 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
         context.loaderOverlay.hide();
         mySnackBar(Strings.successMessage, success: true);
         add(GetMenusEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         context.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(MenusError(message: e.toString()));
       }
     });
@@ -73,9 +73,9 @@ class MenusBloc extends Bloc<MenusEvent, MenusState> {
         mySnackBar(Strings.successMessage, success: true);
         locator<AppRouter>().maybePop();
         add(GetMenusEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         context.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(MenusError(message: e.toString()));
       }
     });

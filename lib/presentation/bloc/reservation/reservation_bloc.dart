@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().maybePop();
         add(const GetReservationsEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });
@@ -52,9 +53,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         buildContext.loaderOverlay.hide();
         mySnackBar(Strings.successMessage, success: true);
         add(const GetReservationsEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });
@@ -68,9 +69,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
         locator<AppRouter>().maybePop();
         mySnackBar(Strings.successMessage, success: true);
         add(const GetReservationsEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });

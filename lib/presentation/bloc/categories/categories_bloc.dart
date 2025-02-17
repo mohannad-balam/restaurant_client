@@ -40,9 +40,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         locator<AppRouter>().maybePop();
         mySnackBar(Strings.successMessage, success: true);
         add(const GetCategoriesEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CategoriesError(message: e.toString()));
       }
     });
@@ -56,9 +56,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         locator<AppRouter>().maybePop();
         mySnackBar(Strings.successMessage, success: true);
         add(const GetCategoriesEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CategoriesError(message: e.toString()));
       }
     });
@@ -71,9 +71,9 @@ class CategoriesBloc extends Bloc<CategoriesEvent, CategoriesState> {
         buildContext.loaderOverlay.hide();
         mySnackBar(Strings.successMessage, success: true);
         add(const GetCategoriesEvent());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CategoriesError(message: e.toString()));
       }
     });

@@ -26,10 +26,6 @@ class AppRouter extends $AppRouter {
           path: '/login-page',
         ),
         AutoRoute(
-          page: RegisterPageRoute.page,
-          path: '/register-page',
-        ),
-        AutoRoute(
           page: CategoriesPageRoute.page,
           path: '/categories-page',
           guards: [AuthGuard()],
