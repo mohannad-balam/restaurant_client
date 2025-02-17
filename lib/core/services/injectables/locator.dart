@@ -1,3 +1,4 @@
+import 'package:logger/logger.dart';
 import 'package:reservation_client/data/sources/categories/categories_service.dart';
 import 'package:reservation_client/data/sources/categories/i_categories_service.dart';
 import 'package:reservation_client/data/sources/menus/i_menus_service.dart';
@@ -33,6 +34,7 @@ import '../http/http_service.dart';
 import '../localDB/local_db_service.dart';
 import 'package:get_it/get_it.dart';
 import '../../utils/helpers/encrypt_helper.dart';
+import '../logger/app_logger.dart';
 
 GetIt locator = GetIt.instance;
 
@@ -49,6 +51,7 @@ Future<void> setupLocator() async {
 Future<void> _setupServives() async {
   locator.registerSingleton(AppRouter());
   locator.registerSingleton(EncryptionHelper());
+  locator.registerSingleton(Logger(printer: CustomPrinter()));
 }
 
 Future<void> _setupHttpService() async {
@@ -89,9 +92,11 @@ Future<void> _setupUsecases() async {
 
   locator.registerSingleton<GetCategoryMenuUsecase>(GetCategoryMenuUsecase());
 
-  locator.registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
+  locator
+      .registerSingleton<CreateReservationUsecase>(CreateReservationUsecase());
 
   locator.registerSingleton<GetUserInfoUsecase>(GetUserInfoUsecase());
 
-  locator.registerSingleton<GetAvailableTablesUsecase>(GetAvailableTablesUsecase());
+  locator.registerSingleton<GetAvailableTablesUsecase>(
+      GetAvailableTablesUsecase());
 }

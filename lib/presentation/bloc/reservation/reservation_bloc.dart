@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -25,9 +26,9 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
           buildContext.loaderOverlay.hide();
           locator<AppRouter>().replace(const ConfirmedPageRoute());
         });
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });

@@ -1,4 +1,5 @@
 import 'package:fk_user_agent/fk_user_agent.dart';
+import 'package:reservation_client/core/services/interceptors/logging_interceptor.dart';
 import '../../../core/enums/http_methods.dart';
 import '../../../core/enums/platforms.dart';
 import '../auth/app_interceptor.dart';
@@ -16,6 +17,9 @@ class HttpService {
       _dio.options.headers['User-Agent'] = FkUserAgent.userAgent!;
     }
 
+    _dio.interceptors.add(
+      LoggerInterceptor(),
+    );
     _dio.interceptors.add(
       AppInterceptor(
         dio: _dio,
