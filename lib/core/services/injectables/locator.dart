@@ -19,6 +19,8 @@ import 'package:reservation_client/domain/usecases/auth/get_user_info_usecase.da
 import 'package:reservation_client/domain/usecases/categories/get_categories_usecase.dart';
 import 'package:reservation_client/domain/usecases/menus/get_menus_usecase.dart';
 import 'package:reservation_client/domain/usecases/reservation/create_reservation_usecase.dart';
+import 'package:reservation_client/domain/usecases/reservation/delete_user_reservation_usecase.dart';
+import 'package:reservation_client/domain/usecases/reservation/get_user_reservation_usecase.dart';
 import 'package:reservation_client/domain/usecases/tables/get_available_tables_usecase.dart';
 
 import '../../../data/sources/auth/auth_service.dart';
@@ -99,4 +101,9 @@ Future<void> _setupUsecases() async {
 
   locator.registerSingleton<GetAvailableTablesUsecase>(
       GetAvailableTablesUsecase());
+
+  locator.registerSingleton<GetUserReservationUsecase>(
+      GetUserReservationUsecase());
+  locator.registerSingleton<DeleteUserReservationUsecase>(
+      DeleteUserReservationUsecase());
 }

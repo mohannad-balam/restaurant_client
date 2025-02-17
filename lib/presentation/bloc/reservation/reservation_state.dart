@@ -2,23 +2,23 @@ part of 'reservation_bloc.dart';
 
 sealed class ReservationState extends Equatable {
   const ReservationState();
-  
+
   @override
   List<Object> get props => [];
 }
 
 final class ReservationInitial extends ReservationState {}
 
-class CreateReservationLoading extends ReservationState{}
+class ReservationsLoading extends ReservationState {}
 
-class CreateReservationLoaded extends ReservationState{
-  final String creationMessage;
+class ReservationsLoaded extends ReservationState {
+  final List<ReservationEntity> reservations;
 
-  const CreateReservationLoaded({required this.creationMessage});
+  const ReservationsLoaded({required this.reservations});
 }
 
-class CreateReservationError extends ReservationState{
+class ReservationsError extends ReservationState {
   final String message;
 
-  const CreateReservationError({required this.message});
+  const ReservationsError({required this.message});
 }

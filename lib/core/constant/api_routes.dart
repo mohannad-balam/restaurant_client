@@ -10,6 +10,9 @@ class ApiRoutes {
   static String menusCategory(String id) => '$baseUrl/categories/$id';
   static String menus = '$baseUrl/menus';
   static String createReservation = '$baseUrl/create-reservation';
+  static String getUserReservations = '$baseUrl/get-user-reservations';
+  static String deleteUserReservations(String id) =>
+      '$baseUrl/delete-user-reservation/$id';
   static String getUser = '$baseUrl/user';
-  static String getAvailableTables= '$baseUrl/available-tables';
+  static String getAvailableTables = '$baseUrl/available-tables';
 }

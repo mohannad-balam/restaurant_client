@@ -43,11 +43,6 @@ class _MenusPageState extends State<MenusPage> {
             if (state.menus.isEmpty) {
               return const NoData();
             }
-            if (state.menus.isEmpty) {
-              return const Center(
-                child: Text("No menus available at the moment."),
-              );
-            }
 
             // Wrap the list in a RefreshIndicator for pull-to-refresh.
             return RefreshIndicator(

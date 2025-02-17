@@ -125,6 +125,14 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     HomePageTile(
+                      icon: Icons.history,
+                      title: 'Reservation History',
+                      subtitle: 'See a history of your reservation',
+                      onTap: () => locator<AppRouter>().push(
+                        const ReservationsHistoryPageRoute(),
+                      ),
+                    ),
+                    HomePageTile(
                       icon: Icons.phone,
                       title: 'Contact Us',
                       subtitle: 'Get in touch quickly',

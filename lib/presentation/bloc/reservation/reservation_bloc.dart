@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:reservation_client/core/services/injectables/locator.dart';
 import 'package:reservation_client/data/models/request/reservation/reservation_request.dart';
+import 'package:reservation_client/domain/entities/reservation/reservation_entity.dart';
+import 'package:reservation_client/domain/usecases/reservation/delete_user_reservation_usecase.dart';
+import 'package:reservation_client/domain/usecases/reservation/get_user_reservation_usecase.dart';
 import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
@@ -29,7 +32,31 @@ class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
       } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
         mySnackBar(e.response?.data, error: true);
-        emit(CreateReservationError(message: e.toString()));
+        emit(ReservationsError(message: e.toString()));
+      }
+    });
+    on<GetUserReservationsEvent>((event, emit) async {
+      try {
+        emit(ReservationsLoading());
+        List<ReservationEntity> reservations =
+            await locator<GetUserReservationUsecase>().call();
+        emit(ReservationsLoaded(reservations: reservations));
+      } catch (e) {
+        mySnackBar(e.toString(), error: true);
+        emit(ReservationsError(message: e.toString()));
+      }
+    });
+    on<DeleteReservationEvent>((event, emit) async {
+      BuildContext context = HelpUtils.getContext();
+      try {
+        context.loaderOverlay.show();
+        await locator<DeleteUserReservationUsecase>().call(params: event.id);
+        context.loaderOverlay.hide();
+        add(const GetUserReservationsEvent());
+        mySnackBar("Deleted Successfully!", success: true);
+      } catch (e) {
+        context.loaderOverlay.hide();
+        mySnackBar(e.toString(), error: true);
       }
     });
   }
