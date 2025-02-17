@@ -1,15 +1,14 @@
-import 'package:reservation_client/data/models/request/category/category.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 
-class CategoryMapper {
+import '../../../../data/models/response/category/category.dart';
 
-  static CategoryEntity toCategoryEntity(CategoryModel categoryModel){
+class CategoryMapper {
+  static CategoryEntity toCategoryEntity(CategoryModel categoryModel) {
     return CategoryEntity(
       id: categoryModel.id,
       name: categoryModel.name,
       description: categoryModel.description,
-      image: categoryModel.image,
+      image: categoryModel.image?.split('/').last,
     );
   }
-
 }

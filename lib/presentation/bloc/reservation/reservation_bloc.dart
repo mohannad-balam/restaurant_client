@@ -9,20 +9,25 @@ import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 import '../../../core/utils/helpers/helpers.dart';
 import '../../../domain/usecases/reservation/create_reservation_usecase.dart';
+import '../../widgets/snack_bar/my_snack_bar.dart';
 part 'reservation_event.dart';
 part 'reservation_state.dart';
 
 class ReservationBloc extends Bloc<ReservationEvent, ReservationState> {
   ReservationBloc() : super(ReservationInitial()) {
-    on<CreateReservationEvent>((event, emit) async{
+    on<CreateReservationEvent>((event, emit) async {
       BuildContext buildContext = HelpUtils.getContext();
-      try{
+      try {
         buildContext.loaderOverlay.show();
-        await locator<CreateReservationUsecase>().call(params: event.reservationRequest);
+        await locator<CreateReservationUsecase>()
+            .call(params: event.reservationRequest)
+            .then((onValue) {
+          buildContext.loaderOverlay.hide();
+          locator<AppRouter>().replace(const ConfirmedPageRoute());
+        });
+      } catch (e) {
         buildContext.loaderOverlay.hide();
-        locator<AppRouter>().replace(const ConfirmedPageRoute());
-      }catch(e){
-        buildContext.loaderOverlay.hide();
+        mySnackBar(e.toString(), error: true);
         emit(CreateReservationError(message: e.toString()));
       }
     });
