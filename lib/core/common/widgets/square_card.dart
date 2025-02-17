@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 
 class SquareCard extends StatelessWidget {
   final IconData icon;
-      final String label;
-      final Color iconColor;
-      final Color textColor;
-      final Color color;
-      final VoidCallback onTap;
-  const SquareCard({super.key, required this.icon, required this.label, required this.iconColor, required this.textColor, required this.color, required this.onTap,});
+  final String label;
+  final Color iconColor;
+  final Color textColor;
+  final Color color;
+  final VoidCallback onTap;
+  const SquareCard({
+    super.key,
+    required this.icon,
+    required this.label,
+    required this.iconColor,
+    required this.textColor,
+    required this.color,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,11 @@ class SquareCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 48.0, color: iconColor,),
+            Icon(
+              icon,
+              size: 48.0,
+              color: iconColor,
+            ),
             const SizedBox(height: 8.0),
             Text(
               label,
@@ -44,6 +56,5 @@ class SquareCard extends StatelessWidget {
         ),
       ),
     );
-  
   }
 }

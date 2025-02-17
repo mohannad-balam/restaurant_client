@@ -10,6 +10,7 @@ import 'package:reservation_client/presentation/router/rourter.dart';
 import 'package:reservation_client/presentation/router/rourter.gr.dart';
 
 import '../../../core/services/localDB/local_db_service.dart';
+import '../../../core/utils/helpers/helpers.dart';
 import '../../bloc/auth/auth_bloc.dart';
 
 @RoutePage()
@@ -25,11 +26,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     user = locator<LocalDBService>().getUserInfo();
-    if(user == null){
+    if (user == null) {
       BlocProvider.of<AuthBloc>(context).add(GetUserInfoEvent());
       user = locator<LocalDBService>().getUserInfo();
     }
-    
+
     super.initState();
   }
 
@@ -43,16 +44,18 @@ class _HomePageState extends State<HomePage> {
       controller: _advancedDrawerController,
       animationCurve: Curves.easeInOut,
       animationDuration: const Duration(milliseconds: 300),
-      drawer: MyDrawer(user: user,),
+      drawer: MyDrawer(
+        user: user,
+      ),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Home'),
-          centerTitle: true,
-          leading:
-            IconButton(onPressed: (){
-              _advancedDrawerController.showDrawer();
-            }, icon: const Icon(Icons.menu))
-        ),
+            title: const Text('Home'),
+            centerTitle: true,
+            leading: IconButton(
+                onPressed: () {
+                  _advancedDrawerController.showDrawer();
+                },
+                icon: const Icon(Icons.menu))),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -74,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 80),
-      
+
               // Square Cards Section
               Expanded(
                 child: GridView.count(
@@ -112,18 +115,19 @@ class _HomePageState extends State<HomePage> {
                       textColor: theme.colorScheme.primary,
                       color: theme.colorScheme.secondary,
                       onTap: () {
-                        locator<AppRouter>().push(const CreateReservationPageRoute());
+                        locator<AppRouter>()
+                            .push(const CreateReservationPageRoute());
                       },
                     ),
                     // Example Future Feature Card
                     SquareCard(
-                      icon: Icons.settings,
+                      icon: Icons.phone,
                       iconColor: theme.colorScheme.secondary,
-                      label: 'Settings',
+                      label: 'Contact Us',
                       textColor: theme.colorScheme.secondary,
                       color: theme.colorScheme.primary,
                       onTap: () {
-                        // Navigate to Settings
+                        HelpUtils.tryLaunch(url: "tel:0900000000");
                       },
                     ),
                   ],

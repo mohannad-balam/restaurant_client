@@ -12,16 +12,13 @@ class MenusPage extends StatefulWidget {
   State<MenusPage> createState() => _MenusPageState();
 }
 
-
 class _MenusPageState extends State<MenusPage> {
-
   @override
   void initState() {
-    BlocProvider.of<MenusBloc>(context).add(
-      GetMenusEvent()
-    );
+    BlocProvider.of<MenusBloc>(context).add(GetMenusEvent());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,18 +27,18 @@ class _MenusPageState extends State<MenusPage> {
       ),
       body: BlocBuilder<MenusBloc, MenusState>(
         builder: (context, state) {
-          if(state is MenusLoading){
+          if (state is MenusLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          }else if(state is MenusLoaded){
+          } else if (state is MenusLoaded) {
             return ListView.builder(
               itemCount: state.menus.length,
               itemBuilder: (BuildContext context, int index) {
                 return MenuItem(menuEntity: state.menus[index]);
               },
             );
-          }else if(state is MenusError){
+          } else if (state is MenusError) {
             return Center(
               child: Text(state.message),
             );

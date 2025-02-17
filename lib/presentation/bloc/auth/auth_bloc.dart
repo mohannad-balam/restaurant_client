@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,9 +38,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoggedIn());
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().replace(const HomePageRoute());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         rethrow;
       }
     });
@@ -62,10 +63,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthLoggedIn());
         buildContext.loaderOverlay.hide();
         locator<AppRouter>().replace(const HomePageRoute());
-      } catch (e) {
+      } on DioException catch (e) {
         buildContext.loaderOverlay.hide();
-        mySnackBar(e.toString(), error: true);
+        mySnackBar(e.response?.data, error: true);
         rethrow;
+      } catch (e) {
+        mySnackBar(e.toString(), error: true);
       }
     });
 
