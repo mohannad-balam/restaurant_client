@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/common/widgets/no_data.dart';
 import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/presentation/bloc/mutual/category_menu_bloc.dart';
 import '../../widgets/menu_item.dart';
@@ -37,6 +38,9 @@ class _CategoryMenusPageState extends State<CategoryMenusPage> {
               child: CircularProgressIndicator(),
             );
           } else if (state is CategoryMenuLoaded) {
+            if (state.categoryMenu.isEmpty) {
+              return const NoData();
+            }
             return ListView.builder(
               itemCount: state.categoryMenu.length,
               itemBuilder: (BuildContext context, int index) {
