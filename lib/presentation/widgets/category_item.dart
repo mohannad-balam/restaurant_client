@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:reservation_client/core/common/widgets/delete_dialog.dart';
 import 'package:reservation_client/core/constant/strings.dart';
 import 'package:reservation_client/domain/entities/category/category_entity.dart';
 import 'package:reservation_client/presentation/bloc/categories/categories_bloc.dart';
@@ -73,9 +74,11 @@ class _CategoryItemState extends State<CategoryItem> {
                             categoryEntity: widget.categoryEntity),
                       );
                     } else if (value == Strings.delete) {
-                      BlocProvider.of<CategoriesBloc>(context).add(
-                          DeleteCategoryEvent(
-                              id: widget.categoryEntity.id.toString()));
+                      showDeleteConfirmationDialog(context, () {
+                        BlocProvider.of<CategoriesBloc>(context).add(
+                            DeleteCategoryEvent(
+                                id: widget.categoryEntity.id.toString()));
+                      });
                     }
                   },
                   itemBuilder: (context) => [
