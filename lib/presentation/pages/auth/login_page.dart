@@ -50,7 +50,8 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 8.0),
                 Text(
                   'Log in to continue',
-                  style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
+                  style:
+                      theme.textTheme.bodyMedium?.copyWith(color: Colors.grey),
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24.0),

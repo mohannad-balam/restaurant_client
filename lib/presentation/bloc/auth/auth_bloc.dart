@@ -33,7 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await locator<RegisterUsecase>()
             .call(params: event.registerRequest)
             .then((onValue) {
-          mySnackBar('Logged in successfully', success: true);
+          mySnackBar('User Created successfully', success: true);
         });
         emit(AuthLoggedIn());
         buildContext.loaderOverlay.hide();
